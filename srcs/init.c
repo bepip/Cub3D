@@ -117,7 +117,12 @@ int init_file(t_file *data)
 }
 
 //TODO: all the magic happens here
-int initialize_data(t_game *game)
+int initialize_data(t_game *game, char *filename)
 {
+	t_file data;
+
+	init_file(&data);
+
+	copy_file(filename, &data);
 	return (0);
 }
