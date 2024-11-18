@@ -6,7 +6,7 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 16:14:17 by pibernar          #+#    #+#             */
-/*   Updated: 2024/11/18 15:34:08 by laichoun         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:58:52 by laichoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,8 @@ typedef struct s_file
 	int		f_rgb[3];
 	int		c_rgb[3];
 }			t_file;
+
+
+//init
 
 #endif
