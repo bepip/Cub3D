@@ -17,15 +17,24 @@
 # include "../mlx/mlx.h"
 # include "../mlx/mlx_int.h"
 # include "s_file.h"
-# include "s_game.h"
 
 # define OPEN_ERROR -1
 # define SUCCESS 0
-# define ERROR 1
-# define CARDINAL_ERROR 2
-# define FLOOR_ERROR 3
-# define MAP_ERROR 4
+# define FAILURE 1
+# define MALLOC_ERROR 2
+# define CARDINAL_ERROR 3
+# define FLOOR_ERROR 4
+# define MISSING_INFO_ERROR 5
+# define MAP_ERROR 6
 
-//init
+typedef struct s_game
+{
+	char	**map;
+}	t_game;
+
+//init how to name functions? initGameAssets? or parseGameDAta? load_gameData?
+int		initialize_data(t_game *game, char *filename);
+int		init_game_data(t_game *gamep, t_file *data);
+void	free_game(t_game *game);
 
 #endif

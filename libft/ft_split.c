@@ -98,11 +98,15 @@ int	ft_free_split(char **tab)
 	if (!tab)
 		return (1);
 	if (!(*tab))
-		return (free(tab), (1));
-	i = 0;
-	while (tab[i])
-		free(tab[i++]);
+		return (free(tab), tab = NULL, (1));
+	i = -1;
+	while (tab[++i])
+	{
+		free(tab[i]);
+		tab[i] = NULL;
+	}
 	free(tab);
+	tab = NULL;
 	return (0);
 }
 

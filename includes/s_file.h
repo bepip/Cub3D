@@ -31,4 +31,11 @@ typedef struct s_file
 	int		c_rgb[3];
 }			t_file;
 
+int			init_file(t_file *data);
+void		free_file(t_file *filep);
+int			copy_file(char *file, t_file *data_file);
+int			set_cardinal_points(t_file *data, char **tab);
+int			set_colors(t_file *data, char **tab);
+int			set_variable(t_file *data);
+int			check_file(t_file *data);
 #endif

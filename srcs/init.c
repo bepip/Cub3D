@@ -11,31 +11,72 @@
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+#include <unistd.h>
 
-int	length_file(char *file);
+static int	length_file(char *file);
 
+//TODO: all the magic happens here
+int initialize_data(t_game *gamep, char *filename)
+{
+	t_file	file;
+	int		err;
+
+	err = init_file(&file);
+	if (err)
+		return (err);
+	err = copy_file(filename, &file);
+	if (err)
+		return (free_file(&file), err);
+	err = set_variable(&file);
+	if (err)
+		return (free_file(&file), err);
+	err = init_game_data(gamep, &file);
+	if (err)
+		return (free_file(&file), err);
+	return (SUCCESS);
+}
+
+
+//TODO: check if all data are set and correct
+int check_file(t_file *data)
+{
+	return (SUCCESS);
+}
+
+//TODO: set all params to 0 or NULL
+int init_file(t_file *data)
+{
+	return (SUCCESS);
+}
 int	copy_file(char *file, t_file *data_file)
 {
 	int		fd;
 	int		i;
 	int		len;
+	char	*line;
 
 	i = -1;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (ft_fprintf(2, "Error\nOpening file\n"), OPEN_ERROR);
+		return (OPEN_ERROR);
 	len = length_file(file);
 	if (len == -1)
 		return (close(fd), OPEN_ERROR);
 	data_file->cp_file = malloc((len + 1) * sizeof(char *));
+	if (data_file->cp_file == NULL)
+		return (MALLOC_ERROR);
 	while (++i < len)
-		data_file->cp_file[i] = get_next_line(fd);
+	{
+		line = get_next_line(fd);
+		if (!line)
+			return (ft_free_split(data_file->cp_file), MALLOC_ERROR);
+		data_file->cp_file[i] = line;
+	}
 	data_file->cp_file[i] = NULL;
-	close(fd);
-	return (SUCCESS);	
+	return (close(fd), SUCCESS);	
 }
 
-int	length_file(char *file)
+static int	length_file(char *file)
 {
 	int		fd;
 	char	*line;
@@ -44,13 +85,13 @@ int	length_file(char *file)
 	length = 0;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (ft_fprintf(2, "Error\nOpening file\n"), OPEN_ERROR);
+		return (OPEN_ERROR);
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
 			break;
-		length ++;
+		++ length;
 		free(line);
 		line = NULL;
 	}
@@ -60,12 +101,12 @@ int	length_file(char *file)
 
 int set_cardinal_points(t_file *data, char **tab)
 {
-	return (0);
+	return (SUCCESS);
 }
 
 int set_colors(t_file *data, char **tab)
 {
-	return (0);
+	return (SUCCESS);
 }
 
 int	set_variable(t_file *data)
@@ -82,6 +123,8 @@ int	set_variable(t_file *data)
 	while (data->cp_file[++i])
 	{
 		tab = ft_strtok(data->cp_file[i], " ,\n");
+		if (!tab)
+			return (MALLOC_ERROR);
 		size = ft_split_size(tab);
 		if (size == 0)
 		{
@@ -89,7 +132,7 @@ int	set_variable(t_file *data)
 			continue;
 		}
 		if (size != 2 || size != 4)
-			return (ft_free_split(tab), ERROR);
+			return (ft_free_split(tab), MISSING_INFO_ERROR);
 		if (size == 2)
 			if (set_cardinal_points(data, tab))
 				return (ft_free_split(tab), CARDINAL_ERROR);
@@ -100,29 +143,8 @@ int	set_variable(t_file *data)
 		if (++count == 6)
 			break;
 	}
+	if (count != 6)
+		return (MISSING_INFO_ERROR);
 	//TODO: need function to add map to map param of t_file
-	return (0);
-}
-
-//TODO: check if all data are set and correct
-int check_file(t_file *data)
-{
-	return (0);
-}
-
-//TODO: set all params to 0 or NULL
-int init_file(t_file *data)
-{
-	return (0);
-}
-
-//TODO: all the magic happens here
-int initialize_data(t_game *game, char *filename)
-{
-	t_file data;
-
-	init_file(&data);
-
-	copy_file(filename, &data);
-	return (0);
+	return (SUCCESS);
 }
