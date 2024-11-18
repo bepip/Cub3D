@@ -14,7 +14,27 @@
 #include <stdlib.h>
 
 size_t	ft_strlen(const char *s);
-int		ft_split_size(const char *str, char c);
+
+static int	ft_word_count(const char *str, char c)
+{
+	int	i;
+	int	count;
+
+	i = ft_strlen(str);
+	count = 0;
+	if (i == 0)
+		return (0);
+	i = 1;
+	if (str[0] != c)
+		count++;
+	while (str[i])
+	{
+		if (str[i - 1] == c && str[i] != c)
+			count ++;
+		i++;
+	}
+	return (count);
+}
 
 static char	*ft_add(const char *str, char c, int i)
 {
@@ -53,7 +73,7 @@ char	**ft_split(char const *s, char c)
 
 	if (!s)
 		return (0);
-	count = ft_split_size(s, c);
+	count = ft_word_count(s, c);
 	split = (char **)malloc(sizeof(char *) * (count + 1));
 	if (!split)
 		return (0);
@@ -84,27 +104,6 @@ int	ft_free_split(char **tab)
 		free(tab[i++]);
 	free(tab);
 	return (0);
-}
-
-int	ft_split_size(const char *str, char c)
-{
-	int	i;
-	int	count;
-
-	i = ft_strlen(str);
-	count = 0;
-	if (i == 0)
-		return (0);
-	i = 1;
-	if (str[0] != c)
-		count++;
-	while (str[i])
-	{
-		if (str[i - 1] == c && str[i] != c)
-			count ++;
-		i++;
-	}
-	return (count);
 }
 
 void	ft_display_split(char **tab)

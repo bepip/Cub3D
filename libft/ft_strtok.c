@@ -97,3 +97,13 @@ char	**ft_strtok(char *str, char *charset)
 	split[ind] = 0;
 	return (split);
 }
+
+size_t	ft_split_size(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
+}

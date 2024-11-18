@@ -6,7 +6,7 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:55:01 by laichoun          #+#    #+#             */
-/*   Updated: 2024/11/18 16:07:37 by laichoun         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:46:20 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,25 @@
 
 int	length_file(char *file);
 
-char	**copy_file(char *file, t_file *data_file)
+int	copy_file(char *file, t_file *data_file)
 {
 	int		fd;
 	int		i;
+	int		len;
 
-	i = 0;
+	i = -1;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-	{
-		ft_fprintf(2, "Error\nOpening file\n");
-		return (NULL);
-	}
-	data_file->cp_file = malloc((length_file(file) + 1) * sizeof(char *));
-	while (1)
-	{
+		return (ft_fprintf(2, "Error\nOpening file\n"), OPEN_ERROR);
+	len = length_file(file);
+	if (len == -1)
+		return (close(fd), OPEN_ERROR);
+	data_file->cp_file = malloc((len + 1) * sizeof(char *));
+	while (++i < len)
 		data_file->cp_file[i] = get_next_line(fd);
-		if (data_file->cp_file[i] == NULL)
-			break;
-		i ++;	
-	}
-	close(fd);
 	data_file->cp_file[i] = NULL;
-	return (data_file->cp_file);	
+	close(fd);
+	return (SUCCESS);	
 }
 
 int	length_file(char *file)
@@ -48,10 +44,7 @@ int	length_file(char *file)
 	length = 0;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-	{
-		ft_fprintf(2, "Error\nOpening file\n");
-		return (-1);
-	}
+		return (ft_fprintf(2, "Error\nOpening file\n"), OPEN_ERROR);
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -65,22 +58,63 @@ int	length_file(char *file)
 	return (length);
 }
 
-int	set_variable(t_file *data_file)
+int set_cardinal_points(t_file *data, char **tab)
+{
+	return (0);
+}
+
+int set_colors(t_file *data, char **tab)
+{
+	return (0);
+}
+
+int	set_variable(t_file *data)
 {
 	int	i;
 	int	j;
     char    **tab;
+	int	size;
+	int count;
 
-	i = 0;
+	i = -1;
 	j = 0;
-	while (data_file->cp_file[i])
+	count = 0;
+	while (data->cp_file[++i])
 	{
-		tab = ft_strtok(data_file->cp_file[i], " ,\n");
-        while (tab[j])
-        {
-            
-        }
+		tab = ft_strtok(data->cp_file[i], " ,\n");
+		size = ft_split_size(tab);
+		if (size == 0)
+		{
+			ft_free_split(tab);
+			continue;
+		}
+		if (size != 2 || size != 4)
+			return (ft_free_split(tab), ERROR);
+		if (size == 2)
+			if (set_cardinal_points(data, tab))
+				return (ft_free_split(tab), CARDINAL_ERROR);
+		if (size == 4)
+			if (set_colors(data, tab))
+				return (ft_free_split(tab), FLOOR_ERROR);
+		ft_free_split(tab);
 	}
+	return (0);
 }
 
+//TODO: check if all data are set and correct
+int check_file(t_file *data)
+{
+	return (0);
+}
 
+//TODO: set all params to 0 or NULL
+int init_file(t_file *data)
+{
+	return (0);
+}
+
+//TODO: all the magic happens here
+int initialize_data(t_game *game)
+{
+	return (0);
+}
