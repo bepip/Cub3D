@@ -6,7 +6,7 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:55:01 by laichoun          #+#    #+#             */
-/*   Updated: 2024/11/18 17:46:20 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:50:22 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,10 @@ int	set_variable(t_file *data)
 			if (set_colors(data, tab))
 				return (ft_free_split(tab), FLOOR_ERROR);
 		ft_free_split(tab);
+		if (++count == 6)
+			break;
 	}
+	//TODO: need function to add map to map param of t_file
 	return (0);
 }
 

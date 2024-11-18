@@ -6,7 +6,7 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 16:14:17 by pibernar          #+#    #+#             */
-/*   Updated: 2024/11/18 17:46:04 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:51:01 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@
 # include "s_file.h"
 # include "s_game.h"
 
-# define FLOOR_ERROR 3
-# define CARDINAL_ERROR 2
-# define ERROR 1
 # define OPEN_ERROR -1
 # define SUCCESS 0
+# define ERROR 1
+# define CARDINAL_ERROR 2
+# define FLOOR_ERROR 3
+# define MAP_ERROR 4
 
 //init
 
