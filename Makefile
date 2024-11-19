@@ -12,7 +12,9 @@ LIBFT = $(LIBFT_DIR)/libft.a
 SRC_DIR = ./srcs/
 OBJ_DIR = ./objs/
 
-SRC_FILES =	main.c
+SRC_FILES =	main.c \
+			init.c \
+			display.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 

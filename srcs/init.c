@@ -6,7 +6,7 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:55:01 by laichoun          #+#    #+#             */
-/*   Updated: 2024/11/18 17:50:22 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/19 10:15:59 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,59 +19,89 @@ static int	length_file(char *file);
 int initialize_data(t_game *gamep, char *filename)
 {
 	t_file	file;
-	int		err;
 
-	err = init_file(&file);
-	if (err)
-		return (err);
-	err = copy_file(filename, &file);
-	if (err)
-		return (free_file(&file), err);
-	err = set_variable(&file);
-	if (err)
-		return (free_file(&file), err);
-	err = init_game_data(gamep, &file);
-	if (err)
-		return (free_file(&file), err);
-	return (SUCCESS);
+	if (init_file(&file))
+		return (FAILURE);
+	if (copy_file(filename, &file))
+		return (free_file(&file), FAILURE);
+	if (set_variable(&file))
+		return (free_file(&file), FAILURE);
+	if (check_file(&file))
+		return (free_file(&file), FAILURE);
+	if (init_game_data(gamep, &file))
+		return (free_file(&file), FAILURE);
+	return (free_file(&file), SUCCESS);
 }
 
 
 //TODO: check if all data are set and correct
-int check_file(t_file *data)
+//		add err msg
+int check_file(t_file *d)
 {
+	if (!d)
+		return (FAILURE);
+	if (d->so != 1 || d->no != 1 || d->we != 1 || d->ea != 1 || d->f != 1 || d->c != 1)
+		return (FAILURE);
+	if (d->tex_so == NULL || d->tex_no == NULL || d->tex_ea == NULL || d->tex_we == NULL)
+		return (FAILURE);
+	if (d->f_rgb[0] < 0 || d->f_rgb[1] < 0 || d->f_rgb[2] < 0)
+		return (FAILURE);
+	if (d->c_rgb[0] < 0 || d->c_rgb[1] < 0 || d->c_rgb[2] < 0)
+		return (FAILURE);
+	if (d->f_rgb[0] > 255 || d->f_rgb[1] > 255 || d->f_rgb[2] > 255)
+		return (FAILURE);
+	if (d->c_rgb[0] > 255 || d->c_rgb[1] > 255 || d->c_rgb[2] > 255)
+		return (FAILURE);
 	return (SUCCESS);
+}
+
+static void init_dim3_arr(int arr[3], int val)
+{
+	arr[0] = val;
+	arr[1] = val;
+	arr[2] = val;
 }
 
 //TODO: set all params to 0 or NULL
 int init_file(t_file *data)
 {
+	if (!data)
+		return (FAILURE);
+	data->cp_file = NULL;
+	data->map = NULL;
+	data->so = 0;
+	data->no = 0;
+	data->ea = 0;
+	data->we = 0;
+	data->f = 0;
+	data->c = 0;
+	data->tex_no = NULL;
+	data->tex_so = NULL;
+	data->tex_ea = NULL;
+	data->tex_we = NULL;
+	init_dim3_arr(data->f_rgb, 0);
+	init_dim3_arr(data->c_rgb, 0);
 	return (SUCCESS);
 }
+
 int	copy_file(char *file, t_file *data_file)
 {
 	int		fd;
 	int		i;
 	int		len;
-	char	*line;
 
 	i = -1;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (OPEN_ERROR);
+		return (err_msg(OPEN_ERROR, file), FAILURE);
 	len = length_file(file);
 	if (len == -1)
-		return (close(fd), OPEN_ERROR);
+		return (close(fd), FAILURE);
 	data_file->cp_file = malloc((len + 1) * sizeof(char *));
 	if (data_file->cp_file == NULL)
-		return (MALLOC_ERROR);
+		return (err_msg(MALLOC_ERROR, NULL), FAILURE);
 	while (++i < len)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			return (ft_free_split(data_file->cp_file), MALLOC_ERROR);
-		data_file->cp_file[i] = line;
-	}
+		data_file->cp_file[i] = get_next_line(fd);
 	data_file->cp_file[i] = NULL;
 	return (close(fd), SUCCESS);	
 }
@@ -85,7 +115,7 @@ static int	length_file(char *file)
 	length = 0;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (OPEN_ERROR);
+		return (err_msg(OPEN_ERROR, file), -1);
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -124,7 +154,7 @@ int	set_variable(t_file *data)
 	{
 		tab = ft_strtok(data->cp_file[i], " ,\n");
 		if (!tab)
-			return (MALLOC_ERROR);
+			return (err_msg(MALLOC_ERROR, NULL), FAILURE);
 		size = ft_split_size(tab);
 		if (size == 0)
 		{
@@ -132,19 +162,19 @@ int	set_variable(t_file *data)
 			continue;
 		}
 		if (size != 2 || size != 4)
-			return (ft_free_split(tab), MISSING_INFO_ERROR);
+			return (ft_free_split(tab), err_msg(MISSING_INFO_ERROR, 0), FAILURE);
 		if (size == 2)
 			if (set_cardinal_points(data, tab))
-				return (ft_free_split(tab), CARDINAL_ERROR);
+				return (ft_free_split(tab), FAILURE);
 		if (size == 4)
 			if (set_colors(data, tab))
-				return (ft_free_split(tab), FLOOR_ERROR);
+				return (ft_free_split(tab), FAILURE);
 		ft_free_split(tab);
 		if (++count == 6)
 			break;
 	}
 	if (count != 6)
-		return (MISSING_INFO_ERROR);
+		return (err_msg(MISSING_INFO_ERROR, NULL), FAILURE);
 	//TODO: need function to add map to map param of t_file
 	return (SUCCESS);
 }

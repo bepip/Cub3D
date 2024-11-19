@@ -6,7 +6,7 @@
 /*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:55:54 by pibernar          #+#    #+#             */
-/*   Updated: 2024/11/18 16:57:16 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/19 10:30:20 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,6 @@ int			set_cardinal_points(t_file *data, char **tab);
 int			set_colors(t_file *data, char **tab);
 int			set_variable(t_file *data);
 int			check_file(t_file *data);
+void		display_file(t_file f);
+int			valid_map(char **map);
 #endif
