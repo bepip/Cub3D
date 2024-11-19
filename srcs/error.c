@@ -6,7 +6,7 @@
 /*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 09:35:46 by pibernar          #+#    #+#             */
-/*   Updated: 2024/11/19 09:48:09 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:47:17 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,6 @@ void err_msg(int err_code, char *info)
 		ft_fprintf(2, "Error: Cardinal Textures missing\n");
 	else if (err_code == FLOOR_ERROR)
 		ft_fprintf(2, "Error: Color code missing\n");
+	else if (err_code == MAP_ERROR)
+		ft_fprintf(2, "Error: Invalid map\n");
 }

@@ -14,7 +14,9 @@ OBJ_DIR = ./objs/
 
 SRC_FILES =	main.c \
 			init.c \
-			display.c
+			display.c \
+			error.c \
+			free.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 

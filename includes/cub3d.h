@@ -6,7 +6,7 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 16:14:17 by pibernar          #+#    #+#             */
-/*   Updated: 2024/11/19 09:37:58 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:18:44 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define FLOOR_ERROR 4
 # define MISSING_INFO_ERROR 5
 # define MAP_ERROR 6
+# define MAPMISSING_ERROR 7
 
 typedef struct s_textures
 {

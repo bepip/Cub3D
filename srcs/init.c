@@ -6,7 +6,7 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:55:01 by laichoun          #+#    #+#             */
-/*   Updated: 2024/11/19 10:15:59 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:47:08 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 #include <unistd.h>
 
 static int	length_file(char *file);
+int			init_game_data(t_game *gamep, t_file *data);
+t_textures	*init_textures(void);
+char		**get_map(char **file, int ind);
 
 //TODO: all the magic happens here
 int initialize_data(t_game *gamep, char *filename)
 {
+	(void) gamep;
 	t_file	file;
 
 	if (init_file(&file))
@@ -28,6 +32,7 @@ int initialize_data(t_game *gamep, char *filename)
 		return (free_file(&file), FAILURE);
 	if (check_file(&file))
 		return (free_file(&file), FAILURE);
+	display_file(file);
 	if (init_game_data(gamep, &file))
 		return (free_file(&file), FAILURE);
 	return (free_file(&file), SUCCESS);
@@ -36,6 +41,7 @@ int initialize_data(t_game *gamep, char *filename)
 
 //TODO: check if all data are set and correct
 //		add err msg
+//		check if textures can be accessed
 int check_file(t_file *d)
 {
 	if (!d)
@@ -62,7 +68,6 @@ static void init_dim3_arr(int arr[3], int val)
 	arr[2] = val;
 }
 
-//TODO: set all params to 0 or NULL
 int init_file(t_file *data)
 {
 	if (!data)
@@ -131,11 +136,55 @@ static int	length_file(char *file)
 
 int set_cardinal_points(t_file *data, char **tab)
 {
+	if (!data || !tab)
+		return (ft_fprintf(2, "Error\n"), FAILURE);
+	if (!ft_strcmp(tab[0], "NO"))
+	{
+		++data->no;
+		data->tex_no = ft_strdup(tab[1]);
+	}
+	else if (!ft_strcmp(tab[0], "SO"))
+	{
+		++data->so;
+		data->tex_so = ft_strdup(tab[1]);
+	}
+	else if (!ft_strcmp(tab[0], "EA"))
+	{
+		++data->ea;
+		data->tex_ea = ft_strdup(tab[1]);
+	}
+	else if (!ft_strcmp(tab[0], "WE"))
+	{
+		++data->we;
+		data->tex_we = ft_strdup(tab[1]);
+	}
+	else
+		return (ft_fprintf(2, "ERROR: Wrong Cardinals given\n"), FAILURE);
 	return (SUCCESS);
 }
 
 int set_colors(t_file *data, char **tab)
 {
+	if (!data || !tab)
+		return (ft_fprintf(2, "Error\n"), FAILURE);
+	if (!ft_strcmp(tab[0], "F"))
+	{
+		++data->f;
+		//check if is num and in range of 0-255
+		data->f_rgb[0] = ft_atoi(tab[0]);
+		data->f_rgb[1] = ft_atoi(tab[1]);
+		data->f_rgb[2] = ft_atoi(tab[2]);
+	}
+	else if (!ft_strcmp(tab[0], "C"))
+	{
+		++data->c;
+		//TODO:check if is num and in range of 0-255
+		data->c_rgb[0] = ft_atoi(tab[0]);
+		data->c_rgb[1] = ft_atoi(tab[1]);
+		data->c_rgb[2] = ft_atoi(tab[2]);
+	}
+	else
+		return (ft_fprintf(2, "ERROR: Wrong colors given\n"), FAILURE);
 	return (SUCCESS);
 }
 
@@ -161,7 +210,7 @@ int	set_variable(t_file *data)
 			ft_free_split(tab);
 			continue;
 		}
-		if (size != 2 || size != 4)
+		if (size != 2 && size != 4)
 			return (ft_free_split(tab), err_msg(MISSING_INFO_ERROR, 0), FAILURE);
 		if (size == 2)
 			if (set_cardinal_points(data, tab))
@@ -176,5 +225,61 @@ int	set_variable(t_file *data)
 	if (count != 6)
 		return (err_msg(MISSING_INFO_ERROR, NULL), FAILURE);
 	//TODO: need function to add map to map param of t_file
+	data->map = get_map(data->cp_file, ++i);
+	if (!data->map)
+		return (FAILURE);
+	ft_printf("test\n");
 	return (SUCCESS);
+}
+
+int		init_game_data(t_game *gamep, t_file *data)
+{
+	if (!data)
+			return (FAILURE);
+	gamep->map = data->map;
+	gamep->textures = init_textures();
+	if (!gamep->textures)
+		return (err_msg(MALLOC_ERROR, NULL), FAILURE);
+	return (SUCCESS);
+}
+
+t_textures	*init_textures(void)
+{
+	t_textures	*t;
+
+	t = (t_textures*) malloc(sizeof(t_textures));
+	if (!t)
+		return (NULL);
+	return (t);
+}
+
+char		**get_map(char **file, int ind)
+{
+	char	**map;
+	int		i;
+	int		j;
+	int		start;
+
+	i = ind - 1;
+	while (file[++i])
+		if (ft_strlen(file[i]) > 1)
+			break;
+	start = i;
+	while (file[i] && ft_strlen(file[i]) > 1)
+		++i;
+	if (start == i)
+		return (err_msg(MAPMISSING_ERROR, NULL), NULL);
+	map = malloc ((i - start + 2) * sizeof(char *));
+	if (!map)
+		return (err_msg(MAPMISSING_ERROR, NULL), NULL);
+	j = 0;
+	while (file[start] && start < i + 1)
+	{
+		map[j++] = ft_strtrim(file[start], "\n");
+		start++;
+	}
+	map[j] = NULL;
+	if (file[start] != NULL)
+		return (ft_free_split(map),err_msg(MAP_ERROR, NULL), NULL);
+	return (map);
 }

@@ -6,7 +6,7 @@
 /*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:55:54 by pibernar          #+#    #+#             */
-/*   Updated: 2024/11/19 10:30:20 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/19 15:08:43 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct s_file
 	int		we;
 	int		f;
 	int		c;
+	int		map_index;
 	char	*tex_no;
 	char	*tex_so;
 	char	*tex_ea;
