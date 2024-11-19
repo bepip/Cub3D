@@ -46,7 +46,9 @@ CFILES	=	ft_tolower.c \
 			ft_lstclear.c \
 			ft_lstlast.c \
 			ft_lstmap.c \
-			ft_lstiter.c 
+			ft_lstiter.c \
+			ft_dupsplit.c \
+			ft_isnumber.c
 
 OBJECTS	=	$(CFILES:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: pibernar <@student.42luxembourg.lu>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 12:03:05 by pibernar          #+#    #+#             */
-/*   Updated: 2024/10/05 16:33:31 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:20:22 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -344,7 +344,9 @@ int		ft_strcmp(const char *s1, const char *s2);
 int		ft_fprintf(int fd, const char *str, ...);
 int		ft_free_split(char **tab);
 size_t	ft_split_size(char **tab);
+char	**ft_dupsplit(char **split);
 void	ft_display_split(char **tab);
 char	**ft_strtok(char *str, char *charset);
+int		ft_isnumber(char *nbr);
 
 #endif

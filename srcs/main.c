@@ -6,7 +6,7 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:38:55 by laichoun          #+#    #+#             */
-/*   Updated: 2024/11/19 15:39:45 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:26:21 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ int	main(int argc, char **argv)
 		return(FAILURE);
 	ft_fprintf(1, "SUCCESS\n");
 	//display_game_data(game);
-	//free_game(&game);
+	free_game(&game);
 	return (0);
 }

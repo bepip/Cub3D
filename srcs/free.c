@@ -6,7 +6,7 @@
 /*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 12:35:52 by pibernar          #+#    #+#             */
-/*   Updated: 2024/11/19 15:34:45 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/19 16:24:39 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,5 @@ static void free_textures(t_textures *t)
 	free(t->tex_so);
 	free(t->tex_we);
 	free(t->tex_ea);
+	free(t);
 }

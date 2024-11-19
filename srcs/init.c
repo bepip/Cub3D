@@ -6,7 +6,7 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:55:01 by laichoun          #+#    #+#             */
-/*   Updated: 2024/11/19 15:47:08 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:08:42 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 static int	length_file(char *file);
 int			init_game_data(t_game *gamep, t_file *data);
-t_textures	*init_textures(void);
-char		**get_map(char **file, int ind);
+t_textures	*init_textures(t_file *data);
+char		**get_map(t_file *file, int ind);
 
 //TODO: all the magic happens here
 int initialize_data(t_game *gamep, char *filename)
@@ -170,7 +170,7 @@ int set_colors(t_file *data, char **tab)
 	if (!ft_strcmp(tab[0], "F"))
 	{
 		++data->f;
-		//check if is num and in range of 0-255
+		//TODO:check if is num and in range of 0-255
 		data->f_rgb[0] = ft_atoi(tab[0]);
 		data->f_rgb[1] = ft_atoi(tab[1]);
 		data->f_rgb[2] = ft_atoi(tab[2]);
@@ -224,8 +224,7 @@ int	set_variable(t_file *data)
 	}
 	if (count != 6)
 		return (err_msg(MISSING_INFO_ERROR, NULL), FAILURE);
-	//TODO: need function to add map to map param of t_file
-	data->map = get_map(data->cp_file, ++i);
+	data->map = get_map(data, ++i);
 	if (!data->map)
 		return (FAILURE);
 	ft_printf("test\n");
@@ -236,24 +235,29 @@ int		init_game_data(t_game *gamep, t_file *data)
 {
 	if (!data)
 			return (FAILURE);
-	gamep->map = data->map;
-	gamep->textures = init_textures();
+	gamep->map = ft_dupsplit(data->map);
+	gamep->textures = init_textures(data);
 	if (!gamep->textures)
 		return (err_msg(MALLOC_ERROR, NULL), FAILURE);
 	return (SUCCESS);
 }
 
-t_textures	*init_textures(void)
+t_textures	*init_textures(t_file *data)
 {
 	t_textures	*t;
 
 	t = (t_textures*) malloc(sizeof(t_textures));
 	if (!t)
 		return (NULL);
+	t->tex_we = ft_strdup(data->tex_we);
+	t->tex_ea = ft_strdup(data->tex_ea);
+	t->tex_no = ft_strdup(data->tex_no);
+	t->tex_so = ft_strdup(data->tex_so);
 	return (t);
 }
 
-char		**get_map(char **file, int ind)
+//TODO: add empty spaces to make the map rectangular
+char		**get_map(t_file *file, int ind)
 {
 	char	**map;
 	int		i;
@@ -261,11 +265,11 @@ char		**get_map(char **file, int ind)
 	int		start;
 
 	i = ind - 1;
-	while (file[++i])
-		if (ft_strlen(file[i]) > 1)
+	while (file->cp_file[++i])
+		if (ft_strlen(file->cp_file[i]) > 1)
 			break;
 	start = i;
-	while (file[i] && ft_strlen(file[i]) > 1)
+	while (file->cp_file[i] && ft_strlen(file->cp_file[i]) > 1)
 		++i;
 	if (start == i)
 		return (err_msg(MAPMISSING_ERROR, NULL), NULL);
@@ -273,13 +277,14 @@ char		**get_map(char **file, int ind)
 	if (!map)
 		return (err_msg(MAPMISSING_ERROR, NULL), NULL);
 	j = 0;
-	while (file[start] && start < i + 1)
+	while (file->cp_file[start] && start < i + 1)
 	{
-		map[j++] = ft_strtrim(file[start], "\n");
+		map[j++] = ft_strtrim(file->cp_file[start], "\n");
 		start++;
 	}
 	map[j] = NULL;
-	if (file[start] != NULL)
+	if (file->cp_file[start] != NULL)
 		return (ft_free_split(map),err_msg(MAP_ERROR, NULL), NULL);
+
 	return (map);
 }
