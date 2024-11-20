@@ -6,11 +6,11 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:55:01 by laichoun          #+#    #+#             */
-/*   Updated: 2024/11/19 17:08:42 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:14:15 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 #include <unistd.h>
 
 static int	length_file(char *file);

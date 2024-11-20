@@ -13,10 +13,10 @@ SRC_DIR = ./srcs/
 OBJ_DIR = ./objs/
 
 SRC_FILES =	main.c \
-			init.c \
-			display.c \
-			error.c \
-			free.c
+			init/init.c \
+			utils/display.c \
+			utils/error.c \
+			utils/free.c
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
@@ -26,9 +26,9 @@ OBJS = $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
 # je sais pas pq le flag -lmlx_Linux compile pas check si tu as ces flags
 # I don't know why the flag -lmlx_Linux doesn't compile. help
 #MLX_FLAGS = -Lmlx -lmlx -lXext -lX11 -lm -lz
-MLX_FLAGS = -Lmlx -lmlx -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz 
+MLX_FLAGS	= -Lmlx -lmlx -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz 
 MLX_PATH	=	./mlx
-MLX		=	$(MLX_PATH)/libmlx.a
+MLX 		=	$(MLX_PATH)/libmlx.a
 
 # Colors
 YELLOW = \033[1;33m
@@ -37,12 +37,16 @@ RESET = \033[0m
 
 all: $(NAME)
 
-$(NAME):  $(MLX) $(LIBFT) $(OBJ_DIR) $(OBJS)
+$(NAME): $(MLX) $(LIBFT) $(OBJ_DIR) $(OBJS)
 	$(CC) $(CFLAGS) $(INC) $(OBJS) $(LIBFT) $(MLX) $(MLX_FLAGS) -o $(NAME)
 	@echo "$(GREEN)$(NAME) compiled successfully!$(RESET)"
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)init
+	mkdir -p $(OBJ_DIR)utils
+	mkdir -p $(OBJ_DIR)render
+	mkdir -p $(OBJ_DIR)actions
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) $(INC) -c $< -o $@
