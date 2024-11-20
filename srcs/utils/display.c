@@ -15,17 +15,18 @@
 void display_game_data(t_game game)
 {
 	int i;
-//	int j;
+	int j;
 
 	i = -1;
-/*	ft_printf("map:\n");
+	ft_printf("map:\n");
 	while (game.map[++i])
 	{
 		j = -1;
-		while (game.map[++i][++j])
-			ft_printf("%s ");
+		while (game.map[i][++j])
+			ft_printf("%c ",game.map[i][j]);
 		ft_printf("\n");
-	}*/
+	}
+	ft_printf("num of row: %d\nnum of col: %d\n", game.row, game.col);
 	ft_printf("textures:\n");
 	ft_printf("NO: %s\n", game.textures->tex_no);
 	ft_printf("SO: %s\n", game.textures->tex_so);

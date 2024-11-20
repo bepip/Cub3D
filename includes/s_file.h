@@ -19,12 +19,14 @@ typedef struct s_file
 	char	**map;
 	int		width;
 	int		height;
+	int		player;
 	int		so;
 	int		no;
 	int		ea;
 	int		we;
 	int		f;
 	int		c;
+	int		map_ind;
 	char	*tex_no;
 	char	*tex_so;
 	char	*tex_ea;

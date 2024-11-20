@@ -11,12 +11,15 @@
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+#include <stdio.h>
 #include <unistd.h>
 
-static int	length_file(char *file);
+static int	get_file_lines(char *file);
 int			init_game_data(t_game *gamep, t_file *data);
-t_textures	*init_textures(t_file *data);
-char		**get_map(t_file *file, int ind);
+t_textures	*set_textures(t_file *data);
+int		init_map(t_file *file);
+int		get_temp_map(t_file *file);
+int		is_valid_map(t_file *f);
 
 //TODO: all the magic happens here
 int initialize_data(t_game *gamep, char *filename)
@@ -32,7 +35,6 @@ int initialize_data(t_game *gamep, char *filename)
 		return (free_file(&file), FAILURE);
 	if (check_file(&file))
 		return (free_file(&file), FAILURE);
-	display_file(file);
 	if (init_game_data(gamep, &file))
 		return (free_file(&file), FAILURE);
 	return (free_file(&file), SUCCESS);
@@ -58,6 +60,8 @@ int check_file(t_file *d)
 		return (FAILURE);
 	if (d->c_rgb[0] > 255 || d->c_rgb[1] > 255 || d->c_rgb[2] > 255)
 		return (FAILURE);
+	/*if (is_valid_map(d))
+		return (FAILURE);*/
 	return (SUCCESS);
 }
 
@@ -74,10 +78,14 @@ int init_file(t_file *data)
 		return (FAILURE);
 	data->cp_file = NULL;
 	data->map = NULL;
+	data->player = 0;
 	data->so = 0;
 	data->no = 0;
 	data->ea = 0;
 	data->we = 0;
+	data->width = 0;
+	data->height = 0;
+	data->map_ind = 0;
 	data->f = 0;
 	data->c = 0;
 	data->tex_no = NULL;
@@ -99,7 +107,7 @@ int	copy_file(char *file, t_file *data_file)
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (err_msg(OPEN_ERROR, file), FAILURE);
-	len = length_file(file);
+	len = get_file_lines(file);
 	if (len == -1)
 		return (close(fd), FAILURE);
 	data_file->cp_file = malloc((len + 1) * sizeof(char *));
@@ -111,7 +119,7 @@ int	copy_file(char *file, t_file *data_file)
 	return (close(fd), SUCCESS);	
 }
 
-static int	length_file(char *file)
+static int	get_file_lines(char *file)
 {
 	int		fd;
 	char	*line;
@@ -163,7 +171,7 @@ int set_cardinal_points(t_file *data, char **tab)
 	return (SUCCESS);
 }
 
-int set_colors(t_file *data, char **tab)
+int set_file_colors(t_file *data, char **tab)
 {
 	if (!data || !tab)
 		return (ft_fprintf(2, "Error\n"), FAILURE);
@@ -191,13 +199,11 @@ int set_colors(t_file *data, char **tab)
 int	set_variable(t_file *data)
 {
 	int	i;
-	int	j;
     char    **tab;
 	int	size;
 	int count;
 
 	i = -1;
-	j = 0;
 	count = 0;
 	while (data->cp_file[++i])
 	{
@@ -216,7 +222,7 @@ int	set_variable(t_file *data)
 			if (set_cardinal_points(data, tab))
 				return (ft_free_split(tab), FAILURE);
 		if (size == 4)
-			if (set_colors(data, tab))
+			if (set_file_colors(data, tab))
 				return (ft_free_split(tab), FAILURE);
 		ft_free_split(tab);
 		if (++count == 6)
@@ -224,47 +230,55 @@ int	set_variable(t_file *data)
 	}
 	if (count != 6)
 		return (err_msg(MISSING_INFO_ERROR, NULL), FAILURE);
-	data->map = get_map(data, ++i);
+	data->map_ind = i + 1;
+	init_map(data);
 	if (!data->map)
 		return (FAILURE);
-	ft_printf("test\n");
 	return (SUCCESS);
 }
 
+//TODO: add colors
 int		init_game_data(t_game *gamep, t_file *data)
 {
 	if (!data)
 			return (FAILURE);
 	gamep->map = ft_dupsplit(data->map);
-	gamep->textures = init_textures(data);
+	gamep->row = data->width;
+	gamep->col = data->height;
+	gamep->textures = set_textures(data);
 	if (!gamep->textures)
 		return (err_msg(MALLOC_ERROR, NULL), FAILURE);
 	return (SUCCESS);
 }
 
-t_textures	*init_textures(t_file *data)
+t_textures	*set_textures(t_file *file)
 {
 	t_textures	*t;
 
 	t = (t_textures*) malloc(sizeof(t_textures));
 	if (!t)
 		return (NULL);
-	t->tex_we = ft_strdup(data->tex_we);
-	t->tex_ea = ft_strdup(data->tex_ea);
-	t->tex_no = ft_strdup(data->tex_no);
-	t->tex_so = ft_strdup(data->tex_so);
+	t->tex_we = ft_strdup(file->tex_we);
+	t->tex_ea = ft_strdup(file->tex_ea);
+	t->tex_no = ft_strdup(file->tex_no);
+	t->tex_so = ft_strdup(file->tex_so);
+	t->f_rgb[0] = file->f_rgb[0];
+	t->f_rgb[1] = file->f_rgb[1];
+	t->f_rgb[2] = file->f_rgb[2];
+	t->c_rgb[0] = file->c_rgb[0];
+	t->c_rgb[1] = file->c_rgb[1];
+	t->c_rgb[2] = file->c_rgb[2];
 	return (t);
 }
 
-//TODO: add empty spaces to make the map rectangular
-char		**get_map(t_file *file, int ind)
+int		get_temp_map(t_file *file)
 {
 	char	**map;
 	int		i;
 	int		j;
 	int		start;
 
-	i = ind - 1;
+	i = file->map_ind - 1;
 	while (file->cp_file[++i])
 		if (ft_strlen(file->cp_file[i]) > 1)
 			break;
@@ -272,19 +286,77 @@ char		**get_map(t_file *file, int ind)
 	while (file->cp_file[i] && ft_strlen(file->cp_file[i]) > 1)
 		++i;
 	if (start == i)
-		return (err_msg(MAPMISSING_ERROR, NULL), NULL);
-	map = malloc ((i - start + 2) * sizeof(char *));
+		return (err_msg(MAPMISSING_ERROR, NULL), FAILURE);
+	map = malloc ((i - start + 1) * sizeof(char *));
 	if (!map)
-		return (err_msg(MAPMISSING_ERROR, NULL), NULL);
+		return (err_msg(MAPMISSING_ERROR, NULL), FAILURE);
 	j = 0;
-	while (file->cp_file[start] && start < i + 1)
-	{
-		map[j++] = ft_strtrim(file->cp_file[start], "\n");
-		start++;
-	}
+	while (file->cp_file[start] && start < i)
+		map[j++] = ft_strtrim(file->cp_file[start++], "\n");
 	map[j] = NULL;
 	if (file->cp_file[start] != NULL)
-		return (ft_free_split(map),err_msg(MAP_ERROR, NULL), NULL);
+		return (ft_free_split(map),err_msg(MAP_ERROR, NULL), FAILURE);
+	return (file->map = map, SUCCESS);
+}
 
-	return (map);
+int	set_map_param(t_file *f)
+{
+	int	height;
+	int width;
+	int	len;
+
+	height = -1;
+	width = 0;
+	while (f->map[++height])
+	{
+		len = ft_strlen(f->map[height]);
+		if (width < len)
+			width = len;
+	}
+	if (width < 3 && height < 3)
+		return (FAILURE);
+	f->height = height;
+	f->width = width;
+	return (SUCCESS);
+}
+
+//TODO: free when calloc fails
+int	set_map(t_file *file)
+{
+	int		i;
+	int		len;
+	char	**map;
+
+	i = -1;
+	map = (char **)malloc(sizeof(char *) * (file->height + 1));
+	if (!map)
+		return (err_msg(MALLOC_ERROR, NULL), FAILURE);
+	while (++i < file->height)
+	{
+		map[i] = ft_calloc(sizeof(char), file->width + 1);
+		if (!map[i])
+			return (FAILURE);
+		ft_memset(map[i], ' ', file->width);
+		len = ft_strlen(file->map[i]);
+		while (--len)
+			map[i][len] = file->map[i][len];
+	}
+	map[i] = NULL;
+	ft_free_split(file->map);
+	file->map = map;
+	return (SUCCESS);
+}
+
+int	init_map(t_file *f)
+{
+	int		i;
+
+	if (get_temp_map(f))
+		return (FAILURE);
+	if (set_map_param(f))
+		return (FAILURE);
+	i = 0;
+	if (set_map(f))
+		return (err_msg(MALLOC_ERROR, NULL), FAILURE);
+	return (SUCCESS);
 }

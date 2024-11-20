@@ -42,6 +42,8 @@ typedef struct s_textures
 typedef struct s_game
 {
 	char		**map;
+	int			row;
+	int			col;
 	t_textures	*textures;
 }	t_game;
 

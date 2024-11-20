@@ -20,7 +20,7 @@ void	free_game(t_game *game)
 	free_textures(game->textures);
 }
 
-void		free_file(t_file *filep)
+void	free_file(t_file *filep)
 {
 	ft_free_split(filep->cp_file);
 	ft_free_split(filep->map);

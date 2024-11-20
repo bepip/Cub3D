@@ -6,7 +6,7 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:38:55 by laichoun          #+#    #+#             */
-/*   Updated: 2024/11/19 16:26:21 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/20 11:19:48 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return(ft_fprintf(1, "Error: Wrong number of argument put a file.cub\n"), FAILURE);
 	if (initialize_data(&game, argv[1]))
-		return(FAILURE);
+		return(ft_fprintf(1, "FAILURE\n"), FAILURE);
+	display_game_data(game);
 	ft_fprintf(1, "SUCCESS\n");
-	//display_game_data(game);
 	free_game(&game);
 	return (0);
 }
