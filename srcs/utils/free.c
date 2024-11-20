@@ -6,7 +6,7 @@
 /*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 12:35:52 by pibernar          #+#    #+#             */
-/*   Updated: 2024/11/19 16:24:39 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:22:53 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	free_game(t_game *game)
 	free_textures(game->textures);
 }
 
-void	free_file(t_file *filep)
+void		free_file(t_file *filep)
 {
 	ft_free_split(filep->cp_file);
 	ft_free_split(filep->map);

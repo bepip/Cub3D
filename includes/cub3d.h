@@ -6,7 +6,7 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 16:14:17 by pibernar          #+#    #+#             */
-/*   Updated: 2024/11/19 16:11:45 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:47:45 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ typedef struct s_game
 }	t_game;
 
 //init how to name functions? initGameAssets? or parseGameDAta? load_gameData?
-int		initialize_data(t_game *game, char *filename);
+int		init_game(t_game *game, char *filename);
 int		init_game_data(t_game *gamep, t_file *data);
 void	free_game(t_game *game);
 
 //error
-void err_msg(int err_code, char *msg);
+void	err_msg(int err_code, char *msg);
 
 //displays
-void display_game_data(t_game game);
+void	display_game_data(t_game game);
 #endif

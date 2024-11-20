@@ -6,7 +6,7 @@
 /*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:55:54 by pibernar          #+#    #+#             */
-/*   Updated: 2024/11/19 17:14:16 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:21:56 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ typedef struct s_file
 	int		c_rgb[3];
 }			t_file;
 
-int			init_file(t_file *data);
-void		free_file(t_file *filep);
-int			copy_file(char *file, t_file *data_file);
-int			set_cardinal_points(t_file *data, char **tab);
-int			set_colors(t_file *data, char **tab);
-int			set_variable(t_file *data);
-int			check_file(t_file *data);
-void		display_file(t_file f);
-int			valid_map(char **map);
+int		init_map(t_file *file);
+int		init_file(t_file *data);
+void	free_file(t_file *filep);
+int		check_file(t_file *data);
+void	display_file(t_file f);
+int		valid_map(char **map);
+int		copy_file(char *file, t_file *file_p);
+int		set_variable(t_file *file);
+int		set_cardinal_points(t_file *file, char **tab);
 #endif
