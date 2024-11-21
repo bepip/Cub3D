@@ -20,9 +20,8 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return(ft_fprintf(1, "Error: Wrong number of argument put a file.cub\n"), FAILURE);
 	if (init_game(&game, argv[1]))
-		return(ft_fprintf(1, "FAILURE\n"), FAILURE);
-	display_game_data(game);
-	ft_fprintf(1, "SUCCESS\n");
+		return(FAILURE);
+	//display_game_data(game);
 	free_game(&game);
 	return (0);
 }
