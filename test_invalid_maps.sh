@@ -36,6 +36,18 @@ INPUT_FILES=(
 		"textures_missing.cub"
 		"wall_hole_east.cub"
 		"wall_none.cub"
+		"map_1_invalid.cub"
+		"map_2_invalid.cub"
+		"map_3_invalid.cub"
+		"map_4_invalid.cub"
+		"map_5_invalid.cub"
+		"map_6_invalid.cub"
+		"map_7_invalid.cub"
+		"map_8_invalid.cub"
+		"map_9_invalid.cub"
+		"map_10_invalid.cub"
+		"map_11_invalid.cub"
+		"map_12_invalid.cub"
 )
 
 clear
@@ -50,13 +62,6 @@ for FILE in "${INPUT_FILES[@]}"; do
     else
         echo -e "${RED}KO${NC}"
     fi
-    echo "---------------------------"
-done
-
-echo "Valgrind test"
-
-for FILE in "${INPUT_FILES[@]}"; do
-    echo "Map: $FILE"
     $VALGRIND $EXECUTABLE "$DIR$FILE" > valgrindout.txt 2>&1
     EXIT_CODE=$?
     # Check the result and print a message
@@ -69,4 +74,3 @@ for FILE in "${INPUT_FILES[@]}"; do
 	rm valgrindout.txt
     echo "---------------------------"
 done
-
