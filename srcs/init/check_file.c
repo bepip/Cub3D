@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
+/*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 17:16:47 by pibernar          #+#    #+#             */
-/*   Updated: 2024/11/20 17:41:32 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:50:29 by laichoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	check_file(t_file *f)
 		return (ft_fprintf(2, "Error: Color code exceeding 255\n"), FAILURE);
 	if (f->c_rgb[0] > 255 || f->c_rgb[1] > 255 || f->c_rgb[2] > 255)
 		return (ft_fprintf(2, "Error: Color code exceeding 255\n"), FAILURE);
-	/* err_msg handled inside func
-	 * if (is_valid_map(f))
-		return (FAILURE);*/
+	/* err_msg handled inside func */
+	if (is_surrounded_walls(f))
+		return (FAILURE);
 	return (SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   s_file.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
+/*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:55:54 by pibernar          #+#    #+#             */
-/*   Updated: 2024/11/20 17:21:56 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:51:05 by laichoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,8 @@ int		valid_map(char **map);
 int		copy_file(char *file, t_file *file_p);
 int		set_variable(t_file *file);
 int		set_cardinal_points(t_file *file, char **tab);
+
+int is_surrounded_walls(t_file *file);
+int is_valid_row(t_file *file);
+int is_valid_col(t_file *file);
 #endif
