@@ -64,6 +64,7 @@ for FILE in "${INPUT_FILES[@]}"; do
 		echo -e "${GREEN}OK${NC}"
     else
         echo -e "${RED}KO${NC}"
+		echo $FILE >> kos
 		ERRCOUNT=$((ERRCOUNT + 1))
     fi
     $VALGRIND $EXECUTABLE "$DIR$FILE" > valgrindout.txt 2>&1
@@ -71,6 +72,7 @@ for FILE in "${INPUT_FILES[@]}"; do
     # Check the result and print a message
     if [ $EXIT_CODE -eq 2 ]; then
         echo -e "${RED}MKO${NC}"
+		echo $FILE >> kos 
 		cat valgrindout.txt
 		VALERRCOUNT=$((VALERRCOUNT + 1))
     else
@@ -92,5 +94,7 @@ if [ $VALERRCOUNT -eq 0 ]; then
 else
 	echo -e "\t${RED}$VALERRCOUNT${NC} leak(s)"
 fi
+cat kos
+rm kos
 echo "---------------------------"
 echo "---------------------------"
