@@ -60,41 +60,45 @@ for FILE in "${INPUT_FILES[@]}"; do
     $EXECUTABLE "$DIR$FILE"
     EXIT_CODE=$?
     # Check the result and print a message
-    if [[ $EXIT_CODE -eq $EXPECTED_EXIT_CODE ]]; then
+    if [ $EXIT_CODE -eq $EXPECTED_EXIT_CODE ]; then
 		echo -e "${GREEN}OK${NC}"
     else
         echo -e "${RED}KO${NC}"
-		echo $FILE >> kos
 		ERRCOUNT=$((ERRCOUNT + 1))
     fi
     $VALGRIND $EXECUTABLE "$DIR$FILE" > valgrindout.txt 2>&1
-    EXIT_CODE=$?
+    VEXIT_CODE=$?
     # Check the result and print a message
-    if [ $EXIT_CODE -eq 2 ]; then
+    if [ $VEXIT_CODE -eq 2 ]; then
         echo -e "${RED}MKO${NC}"
-		echo $FILE >> kos 
 		cat valgrindout.txt
 		VALERRCOUNT=$((VALERRCOUNT + 1))
     else
 		echo -e "${GREEN}MOK${NC}"
     fi
+	if  [ $VEXIT_CODE -eq 2 ] || [ $EXIT_CODE -ne $EXPECTED_EXIT_CODE ]; then
+		echo $FILE >> kos 
+	fi
 	rm valgrindout.txt
     echo "---------------------------"
 done
 
 echo "---------------------------"
-echo "Summary:"
+echo -e "\tSummary:"
 if [ $ERRCOUNT -eq 0 ]; then
-    echo -e "${GREEN}\tNo Errors${NC}"
+    echo -e "${GREEN}No Errors${NC}"
 else
-	echo -e "\t${RED}$ERRCOUNT${NC} KO's"
+	echo -e "${RED}$ERRCOUNT${NC} KO's"
 fi
 if [ $VALERRCOUNT -eq 0 ]; then
-    echo -e "\t${GREEN}No memory leaks${NC}"
+    echo -e "${GREEN}No memory leaks${NC}"
 else
-	echo -e "\t${RED}$VALERRCOUNT${NC} leak(s)"
+	echo -e "${RED}$VALERRCOUNT${NC} leak(s)"
 fi
-cat kos
+if [ $ERRCOUNT -ne 0 ] || [ $VALERRCOUNT -ne 0 ]; then
+	echo -e "\tKO'ed files:"
+	cat kos 
+fi
 rm kos
 echo "---------------------------"
 echo "---------------------------"
