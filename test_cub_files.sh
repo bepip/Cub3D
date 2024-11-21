@@ -1,0 +1,195 @@
+#!/bin/bash
+# Define color codes
+GREEN="\033[0;32m"
+RED="\033[0;31m"
+NC="\033[0m"  # No color (reset)
+EXECUTABLE="./Cub3D"  # Path to executable
+
+EXPECTED_EXIT_CODE=1
+#Directory
+INV_DIR="maps/invalid/"
+VAL_DIR="maps/valid/"
+
+ERRCOUNT=0
+VALERRCOUNT=0
+
+VALGRIND="valgrind --leak-check=full --error-exitcode=2"
+# list of map files
+VAL_INPUT_FILES=(
+	"holes.cub"
+	"map_1_valid.cub"
+	"subject.cub"
+	"whitespaces.cub"
+	)
+
+INV_INPUT_FILES=(
+		"colors_arg_missing.cub"
+		"empty.cub"
+		"map_middle.cub"
+		"player_missing.cub"
+		"textures_no_permission.cub"
+		"wall_hole_north.cub"
+		"colors_missing.cub"
+		"extension_none"
+		"map_missing.cub"
+		"textures_duplicate.cub"
+		"textures_none.cub"
+		"wall_hole_south.cub"
+		"colors_none.cub"
+		"extension_wrong.club"
+		"player_duplicate.cub"
+		"textures_invalid.cub"
+		"textures_wrong_format.cub"
+		"wall_hole_west.cub"
+		"colors_wrong_RGB_range.cub"
+		"map_first.cub"
+		"player_edge.cub"
+		"textures_missing.cub"
+		"wall_hole_east.cub"
+		"wall_none.cub"
+		"map_1_invalid.cub"
+		"map_2_invalid.cub"
+		"map_3_invalid.cub"
+		"map_4_invalid.cub"
+		"map_5_invalid.cub"
+		"map_6_invalid.cub"
+		"map_7_invalid.cub"
+		"map_8_invalid.cub"
+		"map_9_invalid.cub"
+		"map_10_invalid.cub"
+		"map_11_invalid.cub"
+		"map_12_invalid.cub"
+)
+
+make
+clear
+
+echo -e "\033[1;94m _______   ______   _______    _______       \033[0m"
+echo -e "\033[1;94m|__   __| |  ____| |   ____|  |__   __|      \033[0m"
+echo -e "\033[1;94m   | |    | |___   |  |____      | |         \033[0m"
+echo -e "\033[1;94m   | |    |  ___|  |_____  |     | |         \033[0m"
+echo -e "\033[1;94m   | |    | |____   _____| |     | |         \033[0m"
+echo -e "\033[1;94m   |_|    |______| |_______|     |_|         \033[0m"
+echo ""
+echo -e "\t\t\033[1;93mINVALID MAPS.\033[0m"
+echo ""
+for FILE in "${INV_INPUT_FILES[@]}"; do
+    echo "Map: $FILE"
+    $EXECUTABLE "$INV_DIR$FILE"
+    EXIT_CODE=$?
+    # Check the result and print a message
+    if [ $EXIT_CODE -eq $EXPECTED_EXIT_CODE ]; then
+		echo -e "${GREEN}OK${NC}"
+    else
+        echo -e "${RED}KO${NC}"
+		ERRCOUNT=$((ERRCOUNT + 1))
+    fi
+    $VALGRIND $EXECUTABLE "$INV_DIR$FILE" > valgrindout.txt 2>&1
+    VEXIT_CODE=$?
+    # Check the result and print a message
+    if [ $VEXIT_CODE -eq 2 ]; then
+        echo -e "${RED}MKO${NC}"
+		cat valgrindout.txt
+		VALERRCOUNT=$((VALERRCOUNT + 1))
+    else
+		echo -e "${GREEN}MOK${NC}"
+    fi
+	if  [ $VEXIT_CODE -eq 2 ] || [ $EXIT_CODE -ne $EXPECTED_EXIT_CODE ]; then
+		echo $FILE >> kos 
+	fi
+	rm valgrindout.txt
+    echo "---------------------------"
+done
+
+echo "---------------------------"
+echo -e "\tSummary:"
+if [ $ERRCOUNT -eq 0 ]; then
+    echo -e "${GREEN}No Errors${NC}"
+else
+	echo -e "${RED}$ERRCOUNT${NC} KO's"
+fi
+if [ $VALERRCOUNT -eq 0 ]; then
+    echo -e "${GREEN}No memory leaks${NC}"
+else
+	echo -e "${RED}$VALERRCOUNT${NC} leak(s)"
+fi
+if [ $ERRCOUNT -ne 0 ] || [ $VALERRCOUNT -ne 0 ]; then
+	echo -e "\tKO'ed files:"
+	cat kos 
+fi
+rm kos
+echo "---------------------------"
+echo "---------------------------"
+
+while true; do
+	read -p "Go to next test? (y/n): " answer
+	if [ "$answer" == "y" ]; then
+		break
+	elif [ "$answer" == "n" ]; then
+		exit 0
+	else
+		echo "Invalid input. Please enter 'y' or 'n'."
+	fi
+done
+
+
+EXPECTED_EXIT_CODE=0
+ERRCOUNT=0
+VALERRCOUNT=0
+clear
+echo -e "\033[1;94m _______   ______   _______    _______       \033[0m"
+echo -e "\033[1;94m|__   __| |  ____| |   ____|  |__   __|      \033[0m"
+echo -e "\033[1;94m   | |    | |___   |  |____      | |         \033[0m"
+echo -e "\033[1;94m   | |    |  ___|  |_____  |     | |         \033[0m"
+echo -e "\033[1;94m   | |    | |____   _____| |     | |         \033[0m"
+echo -e "\033[1;94m   |_|    |______| |_______|     |_|         \033[0m"
+echo ""
+echo -e "\t\t\033[1;93mVALID MAPS.\033[0m"
+echo ""
+for FILE in "${VAL_INPUT_FILES[@]}"; do
+    echo "Map: $FILE"
+    $EXECUTABLE "$VAL_DIR$FILE"
+    EXIT_CODE=$?
+    # Check the result and print a message
+    if [ $EXIT_CODE -eq $EXPECTED_EXIT_CODE ]; then
+		echo -e "${GREEN}OK${NC}"
+    else
+        echo -e "${RED}KO${NC}"
+		ERRCOUNT=$((ERRCOUNT + 1))
+    fi
+    $VALGRIND $EXECUTABLE "$VAL_DIR$FILE" > valgrindout.txt 2>&1
+    VEXIT_CODE=$?
+    # Check the result and print a message
+    if [ $VEXIT_CODE -eq 2 ]; then
+        echo -e "${RED}MKO${NC}"
+		cat valgrindout.txt
+		VALERRCOUNT=$((VALERRCOUNT + 1))
+    else
+		echo -e "${GREEN}MOK${NC}"
+    fi
+	if  [ $VEXIT_CODE -eq 2 ] || [ $EXIT_CODE -ne $EXPECTED_EXIT_CODE ]; then
+		echo $FILE >> kos 
+	fi
+	rm valgrindout.txt
+    echo "---------------------------"
+done
+
+echo "---------------------------"
+echo -e "\tSummary:"
+if [ $ERRCOUNT -eq 0 ]; then
+    echo -e "${GREEN}No Errors${NC}"
+else
+	echo -e "${RED}$ERRCOUNT${NC} KO's"
+fi
+if [ $VALERRCOUNT -eq 0 ]; then
+    echo -e "${GREEN}No memory leaks${NC}"
+else
+	echo -e "${RED}$VALERRCOUNT${NC} leak(s)"
+fi
+if [ $ERRCOUNT -ne 0 ] || [ $VALERRCOUNT -ne 0 ]; then
+	echo -e "\tKO'ed files:"
+	cat kos 
+fi
+rm kos
+echo "---------------------------"
+echo "---------------------------"
