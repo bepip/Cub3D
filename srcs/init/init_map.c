@@ -15,6 +15,7 @@
 static int	set_map(t_file *file);
 static int	set_map_param(t_file *file);
 static int	get_temp_map(t_file *file);
+static void	free_interrupt(char **tab, int ind);
 
 int	init_map(t_file *file)
 {
@@ -23,11 +24,10 @@ int	init_map(t_file *file)
 	if (set_map_param(file))
 		return (FAILURE);
 	if (set_map(file))
-		return (err_msg(MALLOC_ERROR, NULL), FAILURE);
+		return (FAILURE);
 	return (SUCCESS);
 }
 
-//TODO: free when calloc fails
 static int	set_map(t_file *file)
 {
 	int		i;
@@ -42,7 +42,7 @@ static int	set_map(t_file *file)
 	{
 		map[i] = ft_calloc(sizeof(char), file->width + 1);
 		if (!map[i])
-			return (FAILURE);
+			return (free_interrupt(map, i), err_msg(MALLOC_ERROR, 0), FAILURE);
 		ft_memset(map[i], ' ', file->width);
 		len = ft_strlen(file->map[i]);
 		while (--len >= 0)
@@ -68,8 +68,8 @@ static int	set_map_param(t_file *file)
 		if (width < len)
 			width = len;
 	}
-	if (width < 3 && height < 3)
-		return (FAILURE);
+	if (width < 3 || height < 3)
+		return (ft_fprintf(2, "Error: Map dimension too small.\n"), FAILURE);
 	file->height = height;
 	file->width = width;
 	return (SUCCESS);
@@ -101,4 +101,11 @@ static int	get_temp_map(t_file *file)
 	if (file->cp_file[start] != NULL)
 		return (ft_free_split(map), err_msg(MAP_ERROR, NULL), FAILURE);
 	return (file->map = map, SUCCESS);
+}
+
+static void free_interrupt(char **tab, int ind)
+{
+	while (--ind >= 0)
+		free(tab[ind]);
+	free(tab);
 }
