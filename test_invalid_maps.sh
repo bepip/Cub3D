@@ -92,3 +92,5 @@ if [ $VALERRCOUNT -eq 0 ]; then
 else
 	echo -e "\t${RED}$VALERRCOUNT${NC} leak(s)"
 fi
+echo "---------------------------"
+echo "---------------------------"
