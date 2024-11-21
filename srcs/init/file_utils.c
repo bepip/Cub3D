@@ -18,7 +18,7 @@ static void	init_dim3_arr(int arr[3], int val);
 int	init_file(t_file *file)
 {
 	if (!file)
-		return (FAILURE);
+		return (ft_fprintf(2, "Error\n"), FAILURE);
 	file->cp_file = NULL;
 	file->map = NULL;
 	file->player = 0;
