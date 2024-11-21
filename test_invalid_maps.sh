@@ -8,6 +8,8 @@ EXECUTABLE="./Cub3D"  # Path to executable
 EXPECTED_EXIT_CODE=1
 #Directory
 DIR="maps/invalid/"
+
+VALGRIND="valgrind --leak-check=full --error-exitcode=2"
 # list of map files
 INPUT_FILES=(
 		"colors_arg_missing.cub"
@@ -36,9 +38,10 @@ INPUT_FILES=(
 		"wall_none.cub"
 )
 
+clear
+echo "Invalid map test"
 for FILE in "${INPUT_FILES[@]}"; do
     echo "Map: $FILE"
-
     $EXECUTABLE "$DIR$FILE"
     EXIT_CODE=$?
     # Check the result and print a message
@@ -49,3 +52,21 @@ for FILE in "${INPUT_FILES[@]}"; do
     fi
     echo "---------------------------"
 done
+
+echo "Valgrind test"
+
+for FILE in "${INPUT_FILES[@]}"; do
+    echo "Map: $FILE"
+    $VALGRIND $EXECUTABLE "$DIR$FILE" > valgrindout.txt 2>&1
+    EXIT_CODE=$?
+    # Check the result and print a message
+    if [ $EXIT_CODE -eq 2 ]; then
+        echo -e "${RED}MKO${NC}"
+		cat valgrindout.txt
+    else
+		echo -e "${GREEN}MOK${NC}"
+    fi
+	rm valgrindout.txt
+    echo "---------------------------"
+done
+
