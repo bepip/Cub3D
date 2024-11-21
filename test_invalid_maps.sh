@@ -9,6 +9,9 @@ EXPECTED_EXIT_CODE=1
 #Directory
 DIR="maps/invalid/"
 
+ERRCOUNT=0
+VALERRCOUNT=0
+
 VALGRIND="valgrind --leak-check=full --error-exitcode=2"
 # list of map files
 INPUT_FILES=(
@@ -61,6 +64,7 @@ for FILE in "${INPUT_FILES[@]}"; do
 		echo -e "${GREEN}OK${NC}"
     else
         echo -e "${RED}KO${NC}"
+		ERRCOUNT=$((ERRCOUNT + 1))
     fi
     $VALGRIND $EXECUTABLE "$DIR$FILE" > valgrindout.txt 2>&1
     EXIT_CODE=$?
@@ -68,9 +72,23 @@ for FILE in "${INPUT_FILES[@]}"; do
     if [ $EXIT_CODE -eq 2 ]; then
         echo -e "${RED}MKO${NC}"
 		cat valgrindout.txt
+		VALERRCOUNT=$((VALERRCOUNT + 1))
     else
 		echo -e "${GREEN}MOK${NC}"
     fi
 	rm valgrindout.txt
     echo "---------------------------"
 done
+
+echo "---------------------------"
+echo "Summary:"
+if [ $ERRCOUNT -eq 0 ]; then
+    echo -e "${GREEN}\tNo Errors${NC}"
+else
+	echo -e "\t${RED}$ERRCOUNT${NC} KO's"
+fi
+if [ $VALERRCOUNT -eq 0 ]; then
+    echo -e "\t${GREEN}No memory leaks${NC}"
+else
+	echo -e "\t${RED}$VALERRCOUNT${NC} leak(s)"
+fi
