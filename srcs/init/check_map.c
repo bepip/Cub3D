@@ -6,7 +6,7 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:53:01 by Asma              #+#    #+#             */
-/*   Updated: 2024/11/21 18:10:20 by laichoun         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:19:17 by laichoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,23 @@
 
 #include "../../includes/cub3d.h"
 #include <stdio.h>
+#include <fcntl.h>
 
-int is_surrounded_walls(t_file *file);
+int is_map_valid(t_file *file);
 int is_valid_row(t_file *file);
 int is_valid_col(t_file *file);
+int	check_player(t_file *file);
 
-int is_surrounded_walls(t_file *file)
+int is_map_valid(t_file *file)
 {
     if (is_valid_row(file) == SUCCESS)
         if (is_valid_col(file) == SUCCESS)
-            return (SUCCESS);
+            if (check_player(file) == SUCCESS)
+                return (SUCCESS);
     return (FAILURE);
 }
 
-int	is_valid_map(t_file *file)
+int	check_player(t_file *file)
 {
     int i;
     int j;
@@ -39,18 +42,15 @@ int	is_valid_map(t_file *file)
         j = 0;
         while (j < file->width)
         {
-            j = 0;
             if (file->map[i][j] == 'N' || file->map[i][j] == 'S' || file->map[i][j] == 'W' || file->map[i][j] == 'E')
-            {
                 file->player ++;
-                j ++;
-            }
-            i ++;
+            j ++;
         }
+        i ++;
     }
-    if (file->player > 1)
+    if (file->player != 1)
     {
-        printf("wrong number of player\n");
+        ft_fprintf(2, "Error\nWrong number of player\n");
         return (FAILURE);
     }
     return (SUCCESS);

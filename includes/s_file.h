@@ -6,7 +6,7 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:55:54 by pibernar          #+#    #+#             */
-/*   Updated: 2024/11/21 17:51:05 by laichoun         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:25:44 by laichoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ int		init_file(t_file *data);
 void	free_file(t_file *filep);
 int		check_file(t_file *data);
 void	display_file(t_file f);
-int		valid_map(char **map);
 int		copy_file(char *file, t_file *file_p);
 int		set_variable(t_file *file);
 int		set_cardinal_points(t_file *file, char **tab);
 void	free_cardinals(t_file *file);
 
-int is_surrounded_walls(t_file *file);
+int is_map_valid(t_file *file);
 int is_valid_row(t_file *file);
 int is_valid_col(t_file *file);
+int	check_player(t_file *file);
 #endif

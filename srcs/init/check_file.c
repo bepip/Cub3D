@@ -6,7 +6,7 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 17:16:47 by pibernar          #+#    #+#             */
-/*   Updated: 2024/11/21 17:50:29 by laichoun         ###   ########.fr       */
+/*   Updated: 2024/11/22 15:16:12 by laichoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	check_file(t_file *f)
 	if (f->c_rgb[0] > 255 || f->c_rgb[1] > 255 || f->c_rgb[2] > 255)
 		return (ft_fprintf(2, "Error: Color code exceeding 255\n"), FAILURE);
 	/* err_msg handled inside func */
-	if (is_surrounded_walls(f))
+	if (is_map_valid(f))
 		return (FAILURE);
 	return (SUCCESS);
 }
