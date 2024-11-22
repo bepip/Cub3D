@@ -49,4 +49,5 @@ int			is_map_valid(t_file *file);
 int			is_valid_row(t_file *file);
 int			is_valid_col(t_file *file);
 int			check_player(t_file *file);
+int			check_extension(char *filename, char *ext);
 #endif

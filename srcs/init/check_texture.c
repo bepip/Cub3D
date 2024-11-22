@@ -14,6 +14,8 @@ int	check_textures(char *str)
 		close(fd);
 		return (FAILURE);
 	}
+	if (check_extension(str, "xpm"))
+		return (close(fd), ft_fprintf(2, "Error: Wrong texture file extension\n"), FAILURE);
 	close(fd);
 	return (SUCCESS);
 }

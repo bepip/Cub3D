@@ -15,7 +15,7 @@
 #include <unistd.h>
 
 int			init_game_data(t_game *gamep, t_file *file);
-int			check_extension(char *filename);
+int			check_extension(char *filename, char *ext);
 t_textures	*set_textures(t_file *file);
 
 //TODO: all the magic happens here
@@ -23,7 +23,7 @@ int	init_game(t_game *gamep, char *filename)
 {
 	t_file	file;
 
-	if (check_extension(filename))
+	if (check_extension(filename, "cub"))
 		return (FAILURE);
 	if (init_file(&file))
 		return (FAILURE);

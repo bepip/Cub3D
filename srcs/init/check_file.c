@@ -39,7 +39,7 @@ int	check_file(t_file *f)
 	return (SUCCESS);
 }
 
-int			check_extension(char *filename)
+int			check_extension(char *filename, char *ext)
 {
 	char	**tab;
 	int		size;
@@ -50,8 +50,7 @@ int			check_extension(char *filename)
 	size = ft_split_size(tab);
 	if (size < 2)
 		return (ft_free_split(tab), ft_fprintf(2, "Error: No file extension\n"), FAILURE);
-	if (ft_strcmp(tab[size - 1], "cub"))
+	if (ft_strcmp(tab[size - 1], ext))
 		return (ft_free_split(tab), ft_fprintf(2, "Error: Wrong file extension\n"), FAILURE);
-		//return (ft_free_split(tab), err_msg(MALLOC_ERROR, NULL), FAILURE);
 	return (ft_free_split(tab), SUCCESS);
 }
