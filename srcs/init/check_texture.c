@@ -15,7 +15,7 @@ int	check_textures(char *str)
 		return (FAILURE);
 	}
 	if (check_extension(str, "xpm"))
-		return (close(fd), ft_fprintf(2, "Error: Wrong texture file extension\n"), FAILURE);
+		return (close(fd), FAILURE);
 	close(fd);
 	return (SUCCESS);
 }
@@ -55,6 +55,8 @@ static int	set_param(char **texture, char *filename, int *count)
 	if (check_textures(filename))
 		return (FAILURE);
 	++(*count);
+	if (*count != 1)
+		return (ft_fprintf(2, "Error: Cardinal texture duplicate.\n"), FAILURE);
 	*texture = ft_strdup(filename);
 	return (SUCCESS);
 }

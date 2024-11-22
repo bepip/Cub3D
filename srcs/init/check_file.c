@@ -51,6 +51,6 @@ int			check_extension(char *filename, char *ext)
 	if (size < 2)
 		return (ft_free_split(tab), ft_fprintf(2, "Error: No file extension\n"), FAILURE);
 	if (ft_strcmp(tab[size - 1], ext))
-		return (ft_free_split(tab), ft_fprintf(2, "Error: Wrong file extension\n"), FAILURE);
+		return (ft_free_split(tab), ft_fprintf(2, "Error: Wrong file extension %s\n", ext), FAILURE);
 	return (ft_free_split(tab), SUCCESS);
 }
