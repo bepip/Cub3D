@@ -14,6 +14,7 @@
 
 static int	get_file_lines(char *file);
 static void	init_dim3_arr(int arr[3], int val);
+static int set_param(char **texture, char *filename, int *count);
 
 int	init_file(t_file *file)
 {
@@ -99,25 +100,32 @@ int	set_cardinal_points(t_file *file, char **tab)
 		return (ft_fprintf(2, "Error\n"), FAILURE);
 	if (!ft_strcmp(tab[0], "NO"))
 	{
-		++file->no;
-		file->tex_no = ft_strdup(tab[1]);
+		if (set_param(&(file->tex_no), tab[1], &(file->no)))
+			return (FAILURE);
 	}
 	else if (!ft_strcmp(tab[0], "SO"))
 	{
-		++file->so;
-		file->tex_so = ft_strdup(tab[1]);
+		if (set_param(&(file->tex_so), tab[1], &(file->so)))
+			return (FAILURE);
 	}
 	else if (!ft_strcmp(tab[0], "EA"))
 	{
-		++file->ea;
-		file->tex_ea = ft_strdup(tab[1]);
+		if (set_param(&(file->tex_ea), tab[1], &(file->ea)))
+			return (FAILURE);
 	}
 	else if (!ft_strcmp(tab[0], "WE"))
 	{
-		++file->we;
-		file->tex_we = ft_strdup(tab[1]);
+		if (set_param(&(file->tex_we), tab[1], &(file->we)))
+			return (FAILURE);
 	}
 	else
 		return (ft_fprintf(2, "ERROR: Wrong Cardinals given\n"), FAILURE);
+	return (SUCCESS);
+}
+
+static int set_param(char **texture, char *filename, int *count)
+{
+	++(*count);
+	*texture = ft_strdup(filename);
 	return (SUCCESS);
 }
