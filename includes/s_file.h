@@ -44,6 +44,7 @@ int		valid_map(char **map);
 int		copy_file(char *file, t_file *file_p);
 int		set_variable(t_file *file);
 int		set_cardinal_points(t_file *file, char **tab);
+void	free_cardinals(t_file *file);
 
 int is_surrounded_walls(t_file *file);
 int is_valid_row(t_file *file);

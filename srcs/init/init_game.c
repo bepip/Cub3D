@@ -15,6 +15,7 @@
 #include <unistd.h>
 
 int			init_game_data(t_game *gamep, t_file *file);
+int			check_extension(char *filename);
 t_textures	*set_textures(t_file *file);
 
 //TODO: all the magic happens here
@@ -22,6 +23,8 @@ int	init_game(t_game *gamep, char *filename)
 {
 	t_file	file;
 
+	if (check_extension(filename))
+		return (FAILURE);
 	if (init_file(&file))
 		return (FAILURE);
 	if (copy_file(filename, &file))
@@ -98,8 +101,7 @@ int	set_variable(t_file *file)
 	if (count != 6)
 		return (err_msg(MISSING_INFO_ERROR, NULL), FAILURE);
 	file->map_ind = i + 1;
-	init_map(file);
-	if (!file->map)
+	if (init_map(file))
 		return (FAILURE);
 	return (SUCCESS);
 }

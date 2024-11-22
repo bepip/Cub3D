@@ -38,3 +38,11 @@ static void free_textures(t_textures *t)
 	free(t->tex_ea);
 	free(t);
 }
+
+void	free_cardinals(t_file *file)
+{
+	free(file->tex_no);
+	free(file->tex_so);
+	free(file->tex_ea);
+	free(file->tex_we);
+}

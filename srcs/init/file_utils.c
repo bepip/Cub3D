@@ -92,6 +92,7 @@ static int	get_file_lines(char *file)
 	return (length);
 }
 
+//if texutres are duplicated we get leaks
 int	set_cardinal_points(t_file *file, char **tab)
 {
 	if (!file || !tab)
