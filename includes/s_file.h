@@ -44,6 +44,7 @@ int		copy_file(char *file, t_file *file_p);
 int		set_variable(t_file *file);
 int		set_cardinal_points(t_file *file, char **tab);
 void	free_cardinals(t_file *file);
+int		check_textures(t_file *file);
 
 int is_map_valid(t_file *file);
 int is_valid_row(t_file *file);
