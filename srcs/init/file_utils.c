@@ -14,7 +14,6 @@
 
 static int	get_file_lines(char *file);
 static void	init_dim3_arr(int arr[3], int val);
-static int set_param(char **texture, char *filename, int *count);
 
 int	init_file(t_file *file)
 {
@@ -91,41 +90,4 @@ static int	get_file_lines(char *file)
 	}
 	close(fd);
 	return (length);
-}
-
-//if texutres are duplicated we get leaks
-int	set_cardinal_points(t_file *file, char **tab)
-{
-	if (!file || !tab)
-		return (ft_fprintf(2, "Error\n"), FAILURE);
-	if (!ft_strcmp(tab[0], "NO"))
-	{
-		if (set_param(&(file->tex_no), tab[1], &(file->no)))
-			return (FAILURE);
-	}
-	else if (!ft_strcmp(tab[0], "SO"))
-	{
-		if (set_param(&(file->tex_so), tab[1], &(file->so)))
-			return (FAILURE);
-	}
-	else if (!ft_strcmp(tab[0], "EA"))
-	{
-		if (set_param(&(file->tex_ea), tab[1], &(file->ea)))
-			return (FAILURE);
-	}
-	else if (!ft_strcmp(tab[0], "WE"))
-	{
-		if (set_param(&(file->tex_we), tab[1], &(file->we)))
-			return (FAILURE);
-	}
-	else
-		return (ft_fprintf(2, "ERROR: Wrong Cardinals given\n"), FAILURE);
-	return (SUCCESS);
-}
-
-static int set_param(char **texture, char *filename, int *count)
-{
-	++(*count);
-	*texture = ft_strdup(filename);
-	return (SUCCESS);
 }
