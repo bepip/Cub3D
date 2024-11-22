@@ -1,23 +1,24 @@
 
 #include "../../includes/cub3d.h"
 
-static int set_param(char **texture, char *filename, int *count);
-int check_textures(t_file *file)
-{
-    int fd;
+static int	set_param(char **texture, char *filename, int *count);
 
-    fd = open(file->tex_no, O_RDONLY);
-    if (fd < 0)
-    {
-        ft_fprintf(2, "Error\nOn opening the file\n");
-        close(fd);
-        return (FAILURE);
-    }
-    close(fd);
+int	check_textures(char *str)
+{
+	int	fd;
+
+	fd = open(str, O_RDONLY);
+	if (fd < 0)
+	{
+		ft_fprintf(2, "Error\nOn opening the file : %s\n", str);
+		close(fd);
+		return (FAILURE);
+	}
+	close(fd);
 	return (SUCCESS);
 }
 
-//if texutres are duplicated we get leaks
+// if texutres are duplicated we get leaks
 int	set_cardinal_points(t_file *file, char **tab)
 {
 	if (!file || !tab)
@@ -47,8 +48,10 @@ int	set_cardinal_points(t_file *file, char **tab)
 	return (SUCCESS);
 }
 
-static int set_param(char **texture, char *filename, int *count)
+static int	set_param(char **texture, char *filename, int *count)
 {
+	if (check_textures(filename))
+		return (FAILURE);
 	++(*count);
 	*texture = ft_strdup(filename);
 	return (SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 15:55:01 by laichoun          #+#    #+#             */
-/*   Updated: 2024/11/22 15:31:47 by laichoun         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:43:38 by laichoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	init_game(t_game *gamep, char *filename)
 	if (init_game_data(gamep, &file))
 		return (free_file(&file), FAILURE);
 	
-	display_file(file);
+	//display_file(file);
 	return (free_file(&file), SUCCESS);
 }
 
