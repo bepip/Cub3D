@@ -29,27 +29,42 @@
 # define MAPMISSING_ERROR 7
 # define RGB_INVALID_INT_ERROR 8
 
+# define WIDTH 800
+# define HEIGHT 800
+//letting both chars and void*; old version with char* works but should be removed
 typedef struct s_textures
 {
 	char	*tex_no;
 	char	*tex_so;
 	char	*tex_ea;
 	char	*tex_we;
+	t_img	*img_no;
+	t_img	*img_so;
+	t_img	*img_ea;
+	t_img	*img_we;
 	int		f_rgb[3];
 	int		c_rgb[3];
 }	t_textures;
 
 typedef struct s_game
 {
+	t_textures	*textures;
 	char		**map;
 	int			row;
 	int			col;
-	t_textures	*textures;
+	int			width;
+	int			height;
+	void		*mlx;
+	t_img		*screen;
+	void		*win;
+	t_img		*img_game;
+	t_img		*img_minimap;
 }	t_game;
 
 //init how to name functions? initGameAssets? or parseGameDAta? load_gameData?
 int		init_game(t_game *game, char *filename);
 int		init_game_data(t_game *gamep, t_file *data);
+int		init_mlx(t_game *game, t_file *file);
 void	free_game(t_game *game);
 
 //error

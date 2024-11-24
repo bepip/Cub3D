@@ -13,11 +13,12 @@ SRC_DIR = ./srcs/
 OBJ_DIR = ./objs/
 
 SRC_FILES =	main.c \
-			init/init_game.c \
 			init/file_utils.c \
 			init/check_file.c \
 			init/check_texture.c \
 			init/init_map.c \
+			init/init_game.c \
+			init/init_mlx.c \
 			init/check_map.c \
 			utils/display.c \
 			utils/error.c \
