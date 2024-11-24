@@ -12,30 +12,73 @@
 
 #include "get_next_line.h"
 
-char	*strconcat(char *str, char *buf)
+char	*ft_get_right_side(char *current_line);
+char	*ft_get_line(int fd, char *current_line);
+char	*ft_strconcat(char *current_line, char *buf);
+char	*ft_get_left_side(char *current_line);
+
+char	*ft_get_line(int fd, char *current_line)
+{
+	char	*buf;
+	int		bytes_read;
+
+	buf = malloc (BUFFER_SIZE + 1);
+	if (!buf)
+		return (NULL);
+	bytes_read = 1;
+	buf[0] = 0;
+	while (ft_strchr(buf, '\n') == 0 && bytes_read != 0)
+	{
+		bytes_read = read(fd, buf, BUFFER_SIZE);
+		if (bytes_read == -1)
+			return (free(buf), NULL);
+		buf[bytes_read] = 0;
+		current_line = ft_strconcat(current_line, buf);
+	}
+	free(buf);
+	return (current_line);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*current_line;
+	char		*str;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	current_line = ft_get_line(fd, current_line);
+	if (!current_line)
+		return (NULL);
+	str = ft_get_left_side(current_line);
+	current_line = ft_get_right_side(current_line);
+	return (str);
+}
+
+char	*ft_strconcat(char *current_line, char *buf)
 {
 	size_t	i;
 	size_t	j;
-	char	*new_str;
+	char	*str;
 
-	if (!str)
+	if (!current_line)
 	{
-		str = malloc(sizeof(char) * 1);
-		if (!str)
-			return (NULL);
-		str[0] = 0;
+		current_line = malloc(sizeof(char) * 1);
+		current_line[0] = 0;
 	}
-	new_str = malloc(sizeof(char) * (ft_strlen(str) + ft_strlen(buf) + 1));
-	if (!new_str)
-		return (free(str), NULL);
+	if (!current_line || !buf)
+		return (NULL);
+	str = malloc(sizeof(char) * (ft_strlen(current_line) + ft_strlen(buf) + 1));
+	if (!str)
+		return (NULL);
 	i = -1;
 	j = 0;
-	while (str[++i])
-		new_str[i] = str[i];
+	while (current_line[++i])
+		str[i] = current_line[i];
 	while (buf[j])
-		new_str[i++] = buf[j++];
-	new_str[i] = 0;
-	return (free(str), new_str);
+		str[i++] = buf[j++];
+	str[i] = 0;
+	free(current_line);
+	return (str);
 }
 
 char	*ft_get_left_side(char *current_line)
@@ -63,58 +106,29 @@ char	*ft_get_left_side(char *current_line)
 	return (left_side);
 }
 
-void	set_remainder(char *remainder, char *str)
+char	*ft_get_right_side(char *current_line)
 {
-	int	i;
-	int	shift;
+	char	*right_side;
+	int		i;
+	int		shift;
 
-	i = 0;
 	shift = 0;
-	remainder[i] = '\0';
-	while (str[shift] && str[shift] != '\n')
+	while (current_line[shift] && current_line[shift] != '\n')
 		shift++;
-	if (str[shift] == '\0')
-		return ;
+	if (current_line[shift] == '\0')
+		return (free(current_line), NULL);
+	right_side = malloc(ft_strlen(current_line) - shift + 1);
+	if (!right_side)
+		return (NULL);
 	shift++;
-	while (str[shift])
-		remainder[i++] = str[shift++];
-	remainder[i] = '\0';
-}
-
-char	*ft_get_line(int fd, char *str)
-{
-	char	buf[BUFFER_SIZE + 1];
-	int		bytes_read;
-
-	bytes_read = 1;
-	buf[0] = 0;
-	while (ft_strchr(buf, '\n') == 0 && bytes_read != 0)
+	i = 0;
+	while (current_line[shift])
+		right_side[i++] = current_line[shift++];
+	right_side[i] = 0;
+	if (*right_side == '\0')
 	{
-		bytes_read = read(fd, buf, BUFFER_SIZE);
-		if (bytes_read == -1)
-			return (free(str), NULL);
-		buf[bytes_read] = 0;
-		str = strconcat(str, buf);
+		free(right_side);
+		right_side = NULL;
 	}
-	return (str);
-}
-
-char	*get_next_line(int fd)
-{
-	static char	remainder[BUFFER_SIZE + 1];
-	char		*line;
-	char		*str;
-
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	str = ft_strdup(remainder);
-	if (!str)
-		return (NULL);
-	str = ft_get_line(fd, str);
-	if (!str)
-		return (NULL);
-	line = ft_get_left_side(str);
-	set_remainder(remainder, str);
-	free(str);
-	return (line);
+	return (free(current_line), right_side);
 }

@@ -119,8 +119,8 @@ int	init_game_data(t_game *gamep, t_file *file)
 	gamep->textures = set_textures(file);
 	if (!gamep->textures)
 		return (err_msg(MALLOC_ERROR, NULL), FAILURE);
-	/*if (init_mlx(gamep, file))
-		return (free_game(gamep), FAILURE);*/
+	if (init_mlx(gamep, file))
+		return (free_game(gamep), FAILURE);
 	return (SUCCESS);
 }
 
