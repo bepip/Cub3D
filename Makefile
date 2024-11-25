@@ -54,7 +54,7 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)init
 	mkdir -p $(OBJ_DIR)utils
 	mkdir -p $(OBJ_DIR)render
-	mkdir -p $(OBJ_DIR)actions
+	mkdir -p $(OBJ_DIR)events
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	$(CC) $(CFLAGS) $(INC) -c $< -o $@
