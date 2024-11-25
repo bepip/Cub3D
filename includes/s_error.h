@@ -19,5 +19,6 @@
 # define ERROR_NOT_SURROUNDED 16
 # define ERROR_WRONG_EXTENSION 17
 # define ERROR_NO_EXTENSION 18
+# define ERROR_FILE 19
 
 #endif

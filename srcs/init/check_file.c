@@ -35,7 +35,9 @@ int			check_extension(char *filename, char *ext)
 	size = ft_split_size(tab);
 	if (size < 2)
 		return (ft_free_split(tab), err_msg(ERROR_NO_EXTENSION, NULL), FAILURE);
+	if(tab[size - 2][ft_strlen(tab[size - 2]) - 1] == '/')
+		return (ft_free_split(tab), err_msg(ERROR_FILE, filename), FAILURE);
 	if (ft_strcmp(tab[size - 1], ext))
-		return (ft_free_split(tab), err_msg(ERROR_WRONG_EXTENSION, ext), FAILURE);
+		return (ft_free_split(tab), err_msg(ERROR_WRONG_EXTENSION, ext), 1);
 	return (ft_free_split(tab), SUCCESS);
 }

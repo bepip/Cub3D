@@ -32,7 +32,6 @@ VAL_INPUT_FILES=(
 	"map_valid_newline_end.cub"
 	"subject.cub"
 	"whitespaces.cub"
-	".cub"
 	)
 
 INV_INPUT_FILES=(
@@ -61,6 +60,7 @@ INV_INPUT_FILES=(
 		"textures_missing.cub"
 		"wall_hole_east.cub"
 		"wall_none.cub"
+		".cub"
 		"map_1_invalid.cub"
 		"map_2_invalid.cub"
 		"map_3_invalid.cub"

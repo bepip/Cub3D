@@ -36,9 +36,11 @@ void err_msg(int err_code, char *info)
 	else if (err_code == ERROR_NO_EXTENSION)
 		ft_fprintf(2, "Error: No file extension\n");
 	else if (err_code == ERROR_WRONG_NBR_ARG)
-		ft_fprintf(1, "Error: Wrong number of argument put a file.cub\n");
+		ft_fprintf(2, "Error: Wrong number of argument put a file.cub\n");
 	else if (err_code == ERROR_MAPMISSING)
-		ft_fprintf(1, "Error: MAP is missing\n");
+		ft_fprintf(2, "Error: MAP is missing\n");
+	else if (err_code == ERROR_FILE)
+		ft_fprintf(2, "Error: Invalid file name: %s\n", info);
 	else
 		ft_fprintf(2, "Error: unexpected %d\n", err_code);
 }
