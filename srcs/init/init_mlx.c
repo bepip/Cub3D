@@ -15,13 +15,13 @@ int	init_mlx(t_game *game, t_file *file)
 	game->height = HEIGHT;
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "Cub3D");
 	game->screen = mlx_new_image(game->mlx, WIDTH, HEIGHT);
-	game->textures->img_no = mlx_xpm_file_to_image(
+	game->textures.img_no = mlx_xpm_file_to_image(
 		game->mlx, file->tex_no, &w, &h);
-	game->textures->img_so = mlx_xpm_file_to_image(
+	game->textures.img_so = mlx_xpm_file_to_image(
 		game->mlx, file->tex_so, &w, &h);
-	game->textures->img_we = mlx_xpm_file_to_image(
+	game->textures.img_we = mlx_xpm_file_to_image(
 		game->mlx, file->tex_we, &w, &h);
-	game->textures->img_ea = mlx_xpm_file_to_image(
+	game->textures.img_ea = mlx_xpm_file_to_image(
 		game->mlx, file->tex_ea, &w, &h);
 	return (SUCCESS);
 }

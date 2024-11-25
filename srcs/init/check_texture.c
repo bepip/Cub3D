@@ -1,4 +1,3 @@
-
 #include "../../includes/cub3d.h"
 
 static int	set_param(char **texture, char *filename, int *count);
@@ -20,7 +19,6 @@ int	check_textures(char *str)
 	return (SUCCESS);
 }
 
-// if texutres are duplicated we get leaks
 int	set_cardinal_points(t_file *file, char **tab)
 {
 	if (!file || !tab)

@@ -1,24 +1,10 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   init_game.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 15:55:01 by laichoun          #+#    #+#             */
-/*   Updated: 2024/11/22 16:43:38 by laichoun         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/cub3d.h"
-#include <stdio.h>
-#include <unistd.h>
 
-int			init_game_data(t_game *gamep, t_file *file);
-int			check_extension(char *filename, char *ext);
-t_textures	*set_textures(t_file *file);
+int		init_game_data(t_game *gamep, t_file *file);
+int		check_extension(char *filename, char *ext);
+int		set_textures(t_game *game, t_file *file);
+void	init_blank_game(t_game *gamp);
 
-//TODO: all the magic happens here
 int	init_game(t_game *gamep, char *filename)
 {
 	t_file	file;
@@ -35,8 +21,6 @@ int	init_game(t_game *gamep, char *filename)
 		return (free_file(&file), FAILURE);
 	if (init_game_data(gamep, &file))
 		return (free_file(&file), FAILURE);
-	
-	//display_file(file);
 	return (free_file(&file), SUCCESS);
 }
 
@@ -108,38 +92,27 @@ int	set_variable(t_file *file)
 	return (SUCCESS);
 }
 
-//TODO: init_mlx here and xpm textures etc 
 int	init_game_data(t_game *gamep, t_file *file)
 {
+	init_blank_game(gamep);
 	if (!file)
 		return (FAILURE);
 	gamep->map = ft_dupsplit(file->map);
 	gamep->row = file->width;
 	gamep->col = file->height;
-	gamep->textures = set_textures(file);
-	if (!gamep->textures)
-		return (err_msg(MALLOC_ERROR, NULL), FAILURE);
+	set_textures(gamep, file);
 	if (init_mlx(gamep, file))
 		return (free_game(gamep), FAILURE);
 	return (SUCCESS);
 }
 
-t_textures	*set_textures(t_file *file)
+int		set_textures(t_game *game, t_file *file)
 {
-	t_textures	*t;
-
-	t = (t_textures *)malloc(sizeof(t_textures));
-	if (!t)
-		return (NULL);
-	t->tex_we = ft_strdup(file->tex_we);
-	t->tex_ea = ft_strdup(file->tex_ea);
-	t->tex_no = ft_strdup(file->tex_no);
-	t->tex_so = ft_strdup(file->tex_so);
-	t->f_rgb[0] = file->f_rgb[0];
-	t->f_rgb[1] = file->f_rgb[1];
-	t->f_rgb[2] = file->f_rgb[2];
-	t->c_rgb[0] = file->c_rgb[0];
-	t->c_rgb[1] = file->c_rgb[1];
-	t->c_rgb[2] = file->c_rgb[2];
-	return (t);
+	game->textures.f_rgb[0] = file->f_rgb[0];
+	game->textures.f_rgb[1] = file->f_rgb[1];
+	game->textures.f_rgb[2] = file->f_rgb[2];
+	game->textures.c_rgb[0] = file->c_rgb[0];
+	game->textures.c_rgb[1] = file->c_rgb[1];
+	game->textures.c_rgb[2] = file->c_rgb[2];
+	return (SUCCESS);
 }

@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/15 16:14:17 by pibernar          #+#    #+#             */
-/*   Updated: 2024/11/20 17:47:45 by pibernar         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -34,10 +22,6 @@
 //letting both chars and void*; old version with char* works but should be removed
 typedef struct s_textures
 {
-	char	*tex_no;
-	char	*tex_so;
-	char	*tex_ea;
-	char	*tex_we;
 	t_img	*img_no;
 	t_img	*img_so;
 	t_img	*img_ea;
@@ -48,7 +32,7 @@ typedef struct s_textures
 
 typedef struct s_game
 {
-	t_textures	*textures;
+	t_textures	textures;
 	char		**map;
 	int			row;
 	int			col;
@@ -64,6 +48,7 @@ typedef struct s_game
 //init how to name functions? initGameAssets? or parseGameDAta? load_gameData?
 int		init_game(t_game *game, char *filename);
 int		init_game_data(t_game *gamep, t_file *data);
+void	init_blank_game(t_game *gamep);
 int		init_mlx(t_game *game, t_file *file);
 void	free_game(t_game *game);
 

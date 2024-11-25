@@ -1,23 +1,19 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/19 12:35:52 by pibernar          #+#    #+#             */
-/*   Updated: 2024/11/20 17:22:53 by pibernar         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/cub3d.h"
-
-static void free_textures(t_textures *t);
 
 void	free_game(t_game *game)
 {
 	ft_free_split(game->map);
-	free_textures(game->textures);
+	mlx_destroy_image(game->mlx, game->screen);
+	//mlx_destroy_image(game->mlx, game->img_game);
+	//mlx_destroy_image(game->mlx, game->img_minimap);
+	mlx_destroy_image(game->mlx, game->textures.img_no);
+	mlx_destroy_image(game->mlx, game->textures.img_so);
+	mlx_destroy_image(game->mlx, game->textures.img_ea);
+	mlx_destroy_image(game->mlx, game->textures.img_we);
+	mlx_destroy_window(game->mlx, game->win);
+	mlx_destroy_display(game->mlx);
+	//mlx_loop_end(game->mlx);
+	free(game->mlx);
 }
 
 void		free_file(t_file *filep)
@@ -28,15 +24,6 @@ void		free_file(t_file *filep)
 	free(filep->tex_so);
 	free(filep->tex_we);
 	free(filep->tex_ea);
-}
-
-static void free_textures(t_textures *t)
-{
-	free(t->tex_no);
-	free(t->tex_so);
-	free(t->tex_we);
-	free(t->tex_ea);
-	free(t);
 }
 
 void	free_cardinals(t_file *file)

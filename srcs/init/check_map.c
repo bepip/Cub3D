@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   check_map.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/19 17:53:01 by Asma              #+#    #+#             */
-/*   Updated: 2024/11/22 16:19:17 by laichoun         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 //1) check de la première ligne c'est forcément que des 1 avec ou sans les des espaces
 //2) check de la dernière ligne avec ou sans les espaces 
 
