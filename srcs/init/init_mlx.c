@@ -10,7 +10,7 @@ int	init_mlx(t_game *game, t_file *file)
 	int h;
 	game->mlx = mlx_init();
 	if (!game->mlx)
-		return (ft_fprintf(2, "Error: mlx_init failed\n"), FAILURE);
+		return (err_msg(ERROR_MLX, NULL), FAILURE);
 	game->width = WIDTH;
 	game->height = HEIGHT;
 	game->win = mlx_new_window(game->mlx, WIDTH, HEIGHT, "Cub3D");

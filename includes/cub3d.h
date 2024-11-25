@@ -4,6 +4,7 @@
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
 # include "../mlx/mlx_int.h"
+#include <fcntl.h>
 # include "s_file.h"
 # include "s_error.h"
 # include <X11/X.h>

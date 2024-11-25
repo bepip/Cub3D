@@ -9,7 +9,7 @@ int	check_textures(char *str)
 	fd = open(str, O_RDONLY);
 	if (fd < 0)
 	{
-		ft_fprintf(2, "Error\nOn opening the file : %s\n", str);
+		err_msg(ERROR_OPEN, str);
 		close(fd);
 		return (FAILURE);
 	}
@@ -22,7 +22,7 @@ int	check_textures(char *str)
 int	set_cardinal_points(t_file *file, char **tab)
 {
 	if (!file || !tab)
-		return (ft_fprintf(2, "Error\n"), FAILURE);
+		return (err_msg(0, NULL), FAILURE);
 	if (!ft_strcmp(tab[0], "NO"))
 	{
 		if (set_param(&(file->tex_no), tab[1], &(file->no)))
@@ -44,7 +44,7 @@ int	set_cardinal_points(t_file *file, char **tab)
 			return (FAILURE);
 	}
 	else
-		return (ft_fprintf(2, "ERROR: Wrong Cardinals given\n"), FAILURE);
+		return (err_msg(ERROR_WRONG_CARDINAL, NULL), FAILURE);
 	return (SUCCESS);
 }
 
@@ -54,7 +54,7 @@ static int	set_param(char **texture, char *filename, int *count)
 		return (FAILURE);
 	++(*count);
 	if (*count != 1)
-		return (ft_fprintf(2, "Error: Cardinal texture duplicate.\n"), FAILURE);
+		return (err_msg(ERROR_CARDINAL_DUP_MISS, NULL), FAILURE);
 	*texture = ft_strdup(filename);
 	return (SUCCESS);
 }

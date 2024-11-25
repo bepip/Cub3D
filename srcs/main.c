@@ -5,7 +5,7 @@ int	main(int argc, char **argv)
 	t_game game;
 
 	if (argc != 2)
-		return(ft_fprintf(1, "Error: Wrong number of argument put a file.cub\n"), FAILURE);
+		return(err_msg(ERROR_WRONG_NBR_ARG, NULL), FAILURE);
 	if (init_game(&game, argv[1]))
 		return(FAILURE);
 	/*mlx_hook(game.win, KeyPress, KeyPressMask, &key_handle, &game);

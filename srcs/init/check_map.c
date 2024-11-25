@@ -2,8 +2,6 @@
 // 2) check de la dernière ligne avec ou sans les espaces
 
 #include "../../includes/cub3d.h"
-#include <fcntl.h>
-#include <stdio.h>
 
 int	is_map_valid(t_file *file);
 int	is_valid_row(t_file *file);
@@ -38,7 +36,7 @@ int	check_player(t_file *file)
 	}
 	if (file->player != 1)
 	{
-		ft_fprintf(2, "Error\nWrong number of player\n");
+        err_msg(ERROR_PLAYER, NULL);
 		return (FAILURE);
 	}
 	return (SUCCESS);
@@ -59,14 +57,16 @@ int	is_valid_row(t_file *file)
 				j++;
 			if (j < file->width && file->map[i][j] != '1')
 			{
-			//	printf("NOK first char is not a wall border_rows, position i;%d,j : %d\n", i, j);
+                err_msg(ERROR_NOT_SURROUNDED, NULL);
+				//printf("NOK first char is not a wall border_rows, position i;%d,j : %d\n", i, j);
 				return (FAILURE);
 			}
 			while (j < file->width && file->map[i][j] != 32)
 				j++;
 			if (file->map[i][j - 1] != '1' && file->map[i][j - 1] != ' ')
 			{
-			//	printf("NOK first char is not a wall border_rows test,position i ;%d, j : %d\n", i, j);
+                err_msg(ERROR_NOT_SURROUNDED, NULL);
+				//printf("NOK first char is not a wall border_rows test,position i ;%d, j : %d\n", i, j);
 				return (FAILURE);
 			}
 			j++;
@@ -91,14 +91,16 @@ int	is_valid_col(t_file *file)
 				i++;
 			if (i < file->height && file->map[i][j] != '1')
 			{
-			//	printf("NOK first char is not a wall border_rows, position i ;%d, j : %d\n", i, j);
+                err_msg(ERROR_NOT_SURROUNDED, NULL);
+				//printf("NOK first char is not a wall border_rows, position i ;%d, j : %d\n", i, j);
 				return (FAILURE);
 			}
 			while (i < file->height && file->map[i][j] != 32)
 				i++;
 			if (file->map[i - 1][j] != '1' && file->map[i - 1][j] != ' ')
 			{
-			//	printf("NOK first char is not a wall border_rows test,position i ; %d, j : %d\n", i - 1, j);
+                err_msg(ERROR_NOT_SURROUNDED, NULL);
+				//printf("NOK first char is not a wall border_rows test,position i ; %d, j : %d\n", i - 1, j);
 				return (FAILURE);
 			}
 			i++;

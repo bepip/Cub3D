@@ -57,7 +57,7 @@ static int	set_map_param(t_file *file)
 			width = len;
 	}
 	if (width < 3 || height < 3)
-		return (ft_fprintf(2, "Error: Map dimension too small.\n"), FAILURE);
+		return (err_msg(ERROR_MAP_DIM, NULL), FAILURE);
 	file->height = height;
 	file->width = width;
 	return (SUCCESS);

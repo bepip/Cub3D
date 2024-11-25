@@ -27,11 +27,11 @@ int	init_game(t_game *gamep, char *filename)
 int	set_file_colors(t_file *file, char **tab)
 {
 	if (!file || !tab)
-		return (ft_fprintf(2, "Error: set_file_colors\n"), FAILURE);
+		return (err_msg(0, NULL), FAILURE);
 	if (!ft_strcmp(tab[0], "F"))
 	{
 		if (!ft_isnumber(tab[1]) || !ft_isnumber(tab[2]) || !ft_isnumber(tab[3]))
-			return (ft_fprintf(2, "Error: Color code is not a number"), FAILURE);
+			return (err_msg(ERROR_INVALID_RGB, NULL), FAILURE);
 		++file->f;
 		file->f_rgb[0] = ft_atoi(tab[1]);
 		file->f_rgb[1] = ft_atoi(tab[2]);
@@ -40,14 +40,14 @@ int	set_file_colors(t_file *file, char **tab)
 	else if (!ft_strcmp(tab[0], "C"))
 	{
 		if (!ft_isnumber(tab[1]) || !ft_isnumber(tab[2]) || !ft_isnumber(tab[3]))
-			return (ft_fprintf(2, "Error: Color code is not a number\n"), FAILURE);
+			return (err_msg(ERROR_INVALID_RGB, NULL), FAILURE);
 		++file->c;
 		file->c_rgb[0] = ft_atoi(tab[1]);
 		file->c_rgb[1] = ft_atoi(tab[2]);
 		file->c_rgb[2] = ft_atoi(tab[3]);
 	}
 	else
-		return (ft_fprintf(2, "ERROR: Invalid color identifier.\n"), FAILURE);
+		return (err_msg(ERROR_INVALID_ID, NULL), FAILURE);
 	return (SUCCESS);
 }
 
