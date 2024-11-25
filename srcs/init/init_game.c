@@ -64,7 +64,7 @@ int	set_variable(t_file *file)
 	{
 		tab = ft_strtok(file->cp_file[i], " ,\n");
 		if (!tab)
-			return (err_msg(MALLOC_ERROR, NULL), FAILURE);
+			return (err_msg(ERROR_MALLOC, NULL), FAILURE);
 		size = ft_split_size(tab);
 		if (size == 0)
 		{
@@ -72,7 +72,7 @@ int	set_variable(t_file *file)
 			continue ;
 		}
 		if (size != 2 && size != 4)
-			return (ft_free_split(tab), err_msg(MISSING_INFO_ERROR, 0),
+			return (ft_free_split(tab), err_msg(ERROR_MISSING_INFO, 0),
 				FAILURE);
 		if (size == 2)
 			if (set_cardinal_points(file, tab))
@@ -85,7 +85,7 @@ int	set_variable(t_file *file)
 			break ;
 	}
 	if (count != 6)
-		return (err_msg(MISSING_INFO_ERROR, NULL), FAILURE);
+		return (err_msg(ERROR_MISSING_INFO, NULL), FAILURE);
 	file->map_ind = i + 1;
 	if (init_map(file))
 		return (FAILURE);

@@ -25,12 +25,12 @@ static int	set_map(t_file *file)
 	i = -1;
 	map = (char **)malloc(sizeof(char *) * (file->height + 1));
 	if (!map)
-		return (err_msg(MALLOC_ERROR, NULL), FAILURE);
+		return (err_msg(ERROR_MALLOC, NULL), FAILURE);
 	while (++i < file->height)
 	{
 		map[i] = ft_calloc(sizeof(char), file->width + 1);
 		if (!map[i])
-			return (free_interrupt(map, i), err_msg(MALLOC_ERROR, 0), FAILURE);
+			return (free_interrupt(map, i), err_msg(ERROR_MALLOC, 0), FAILURE);
 		ft_memset(map[i], ' ', file->width);
 		len = ft_strlen(file->map[i]);
 		while (--len >= 0)
@@ -77,17 +77,17 @@ static int	get_temp_map(t_file *file)
 	while (file->cp_file[i] && ft_isempty_line(file->cp_file[i]) == 0)
 		++i;
 	if (start == i)
-		return (err_msg(MAPMISSING_ERROR, NULL), FAILURE);
+		return (err_msg(ERROR_MAPMISSING, NULL), FAILURE);
 	map = malloc ((i - start + 1) * sizeof(char *));
 	if (!map)
-		return (err_msg(MAPMISSING_ERROR, NULL), FAILURE);
+		return (err_msg(ERROR_MAPMISSING, NULL), FAILURE);
 	j = 0;
 	while (file->cp_file[start] && start < i)
 		map[j++] = ft_strtrim(file->cp_file[start++], "\n");
 	map[j] = NULL;
 	skip_newlines(file, &start);
 	if (file->cp_file[start] != NULL)
-		return (ft_free_split(map), err_msg(MAP_ERROR, NULL), FAILURE);
+		return (ft_free_split(map), err_msg(ERROR_MAP, NULL), FAILURE);
 	return (file->map = map, SUCCESS);
 }
 

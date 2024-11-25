@@ -31,7 +31,7 @@ int			check_extension(char *filename, char *ext)
 
 	tab = ft_split(filename, '.');
 	if (!tab)
-		return (err_msg(MALLOC_ERROR, NULL), FAILURE);
+		return (err_msg(ERROR_MALLOC, NULL), FAILURE);
 	size = ft_split_size(tab);
 	if (size < 2)
 		return (ft_free_split(tab), ft_fprintf(2, "Error: No file extension\n"), FAILURE);

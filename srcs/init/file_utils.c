@@ -37,13 +37,13 @@ int	copy_file(char *file, t_file *file_p)
 	i = -1;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (err_msg(OPEN_ERROR, file), FAILURE);
+		return (err_msg(ERROR_OPEN, file), FAILURE);
 	len = get_file_lines(file);
 	if (len == -1)
 		return (close(fd), FAILURE);
 	file_p->cp_file = malloc((len + 1) * sizeof(char *));
 	if (file_p->cp_file == NULL)
-		return (err_msg(MALLOC_ERROR, NULL), FAILURE);
+		return (err_msg(ERROR_MALLOC, NULL), FAILURE);
 	while (++i < len)
 		file_p->cp_file[i] = get_next_line(fd);
 	file_p->cp_file[i] = NULL;
@@ -66,7 +66,7 @@ static int	get_file_lines(char *file)
 	length = 0;
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (err_msg(OPEN_ERROR, file), -1);
+		return (err_msg(ERROR_OPEN, file), -1);
 	while (1)
 	{
 		line = get_next_line(fd);
