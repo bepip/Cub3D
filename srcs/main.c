@@ -8,7 +8,6 @@ int	main(int argc, char **argv)
 		return(ft_fprintf(1, "Error: Wrong number of argument put a file.cub\n"), FAILURE);
 	if (init_game(&game, argv[1]))
 		return(FAILURE);
-	//display_game_data(game);
 	free_game(&game);
 	return (0);
 }

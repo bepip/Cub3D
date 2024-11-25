@@ -63,6 +63,7 @@ static int	set_map_param(t_file *file)
 	return (SUCCESS);
 }
 
+int	ft_isempty_line(char *s);
 static int	get_temp_map(t_file *file)
 {
 	char	**map;
@@ -70,12 +71,10 @@ static int	get_temp_map(t_file *file)
 	int		j;
 	int		start;
 
-	i = file->map_ind - 1;
-	while (file->cp_file[++i])
-		if (ft_strlen(file->cp_file[i]) > 1)
-			break ;
+	i = file->map_ind;
+	skip_newlines(file, &i);
 	start = i;
-	while (file->cp_file[i] && ft_strlen(file->cp_file[i]) > 1)
+	while (file->cp_file[i] && ft_isempty_line(file->cp_file[i]) == 0)
 		++i;
 	if (start == i)
 		return (err_msg(MAPMISSING_ERROR, NULL), FAILURE);
@@ -86,6 +85,7 @@ static int	get_temp_map(t_file *file)
 	while (file->cp_file[start] && start < i)
 		map[j++] = ft_strtrim(file->cp_file[start++], "\n");
 	map[j] = NULL;
+	skip_newlines(file, &start);
 	if (file->cp_file[start] != NULL)
 		return (ft_free_split(map), err_msg(MAP_ERROR, NULL), FAILURE);
 	return (file->map = map, SUCCESS);

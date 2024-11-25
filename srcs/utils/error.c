@@ -15,4 +15,6 @@ void err_msg(int err_code, char *info)
 		ft_fprintf(2, "Error: Color code missing\n");
 	else if (err_code == MAP_ERROR)
 		ft_fprintf(2, "Error: Invalid map\n");
+	else
+		ft_fprintf(2, "Error: unexpected %d\n", err_code);
 }

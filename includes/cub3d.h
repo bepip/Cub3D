@@ -51,6 +51,7 @@ int		init_game_data(t_game *gamep, t_file *data);
 void	init_blank_game(t_game *gamep);
 int		init_mlx(t_game *game, t_file *file);
 void	free_game(t_game *game);
+void	skip_newlines(t_file *file, int *i);
 
 //error
 void	err_msg(int err_code, char *msg);

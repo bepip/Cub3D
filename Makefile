@@ -17,6 +17,7 @@ SRC_FILES =	main.c \
 			init/check_file.c \
 			init/check_texture.c \
 			init/init_map.c \
+			init/init_map_utils.c \
 			init/init_game.c \
 			init/init_mlx.c \
 			init/init_blank_game.c \
