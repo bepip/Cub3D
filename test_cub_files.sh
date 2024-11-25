@@ -32,6 +32,7 @@ VAL_INPUT_FILES=(
 	"map_valid_newline_end.cub"
 	"subject.cub"
 	"whitespaces.cub"
+	".cub"
 	)
 
 INV_INPUT_FILES=(
