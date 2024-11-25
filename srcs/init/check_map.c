@@ -12,8 +12,10 @@ int	check_player(t_file *file);
 
 int	is_map_valid(t_file *file)
 {
-	return ((is_valid_row(file) == SUCCESS && is_valid_col(file) == SUCCESS
-			&& check_player(file) == SUCCESS));
+	if ((is_valid_row(file) == SUCCESS && is_valid_col(file) == SUCCESS
+			&& check_player(file) == SUCCESS))
+        return (SUCCESS);
+    return (FAILURE);
 }
 
 int	check_player(t_file *file)
@@ -57,14 +59,14 @@ int	is_valid_row(t_file *file)
 				j++;
 			if (j < file->width && file->map[i][j] != '1')
 			{
-				//printf("NOK first char is not a wall border_rows, position i;%d,j : %d\n", i, j);
+			//	printf("NOK first char is not a wall border_rows, position i;%d,j : %d\n", i, j);
 				return (FAILURE);
 			}
 			while (j < file->width && file->map[i][j] != 32)
 				j++;
 			if (file->map[i][j - 1] != '1' && file->map[i][j - 1] != ' ')
 			{
-				//printf("NOK first char is not a wall border_rows test,position i ;%d, j : %d\n", i, j);
+			//	printf("NOK first char is not a wall border_rows test,position i ;%d, j : %d\n", i, j);
 				return (FAILURE);
 			}
 			j++;
@@ -89,14 +91,14 @@ int	is_valid_col(t_file *file)
 				i++;
 			if (i < file->height && file->map[i][j] != '1')
 			{
-				//printf("NOK first char is not a wall border_rows, position i ;%d, j : %d\n", i, j);
+			//	printf("NOK first char is not a wall border_rows, position i ;%d, j : %d\n", i, j);
 				return (FAILURE);
 			}
 			while (i < file->height && file->map[i][j] != 32)
 				i++;
 			if (file->map[i - 1][j] != '1' && file->map[i - 1][j] != ' ')
 			{
-				//printf("NOK first char is not a wall border_rows test,position i ; %d, j : %d\n", i - 1, j);
+			//	printf("NOK first char is not a wall border_rows test,position i ; %d, j : %d\n", i - 1, j);
 				return (FAILURE);
 			}
 			i++;
