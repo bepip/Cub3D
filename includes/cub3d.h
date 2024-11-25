@@ -6,6 +6,8 @@
 # include "../mlx/mlx_int.h"
 # include "s_file.h"
 # include "s_error.h"
+# include <X11/X.h>
+# include <X11/keysym.h>
 
 # define SUCCESS 0
 # define FAILURE 1
@@ -46,6 +48,9 @@ int		init_mlx(t_game *game, t_file *file);
 void	free_game(t_game *game);
 void	skip_newlines(t_file *file, int *i);
 
+//key_handle
+int	key_handle(int key, t_game *game);
+int	close_window(t_game *game);
 //error
 void	err_msg(int err_code, char *msg);
 

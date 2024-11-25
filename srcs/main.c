@@ -8,6 +8,10 @@ int	main(int argc, char **argv)
 		return(ft_fprintf(1, "Error: Wrong number of argument put a file.cub\n"), FAILURE);
 	if (init_game(&game, argv[1]))
 		return(FAILURE);
+	/*mlx_hook(game.win, KeyPress, KeyPressMask, &key_handle, &game);
+	mlx_hook(game.win, DestroyNotify, StructureNotifyMask, &close_window,
+		&game);
+	mlx_loop(game.mlx);*/
 	free_game(&game);
 	return (0);
 }
