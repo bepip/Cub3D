@@ -20,6 +20,16 @@
 # define ROT_SPEED 0.05
 # define MOVE_SPEED 0.15
 
+enum {
+	ON_KEYDOWN = 2,
+	ON_KEYUP = 3,
+	ON_MOUSEDOWN = 4,
+	ON_MOUSEUP = 5,
+	ON_MOUSEMOVE = 6,
+	ON_EXPOSE = 12,
+	ON_DESTROY = 17
+};
+
 typedef struct s_textures
 {
 	t_img		*img_no;
@@ -87,6 +97,8 @@ void	s_key(t_game *game);
 void	a_key(t_game *game);
 void	right_arrow_key(t_game *game);
 void	left_arrow_key(t_game *game);
+void	hide_show_mouse(t_game *game);
+int	mouse_handle(int x, int y, t_game *game);
 // error
 void	err_msg(int err_code, char *msg);
 

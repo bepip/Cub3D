@@ -30,6 +30,7 @@ SRC_FILES =	main.c \
 			render/raycasting.c \
 			render/mlx_draw_vertline.c \
 			events/key_handle.c \
+			events/mouse_handle.c \
 			events/close_window.c \
 			events/movement_keys.c \
 			events/rotation_keys.c \
