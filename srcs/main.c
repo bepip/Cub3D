@@ -1,4 +1,5 @@
 #include "../includes/cub3d.h"
+#include <X11/X.h>
 
 int	main(int argc, char *argv[])
 {
@@ -10,7 +11,7 @@ int	main(int argc, char *argv[])
 		return (FAILURE);
 	mlx_loop_hook(game.mlx, render, &game);
 	mlx_hook(game.win, KeyPress, KeyPressMask, &key_handle, &game);
-	mlx_hook(game.win, ON_MOUSEMOVE, 0, &mouse_handle, &game);
+	mlx_hook(game.win, MotionNotify, PointerMotionMask, &mouse_handle, &game);
 	mlx_hook(game.win, DestroyNotify, StructureNotifyMask, &close_window,
 		&game);
 	mlx_loop(game.mlx);
