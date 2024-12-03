@@ -14,8 +14,10 @@
 # define SUCCESS 0
 # define FAILURE 1
 
-# define WIDTH 1280
-# define HEIGHT 720
+//# define WIDTH 1280
+//# define HEIGHT 720
+# define WIDTH 1920
+# define HEIGHT 1080
 
 # define ROT_SPEED 0.05
 # define MOVE_SPEED 0.15
@@ -65,6 +67,7 @@ typedef struct s_game
 	float		delta_y;
 	float		dist_perp;
 	float		ratio;
+	int			old_mpos_x;
 	int			ray_pos_x;
 	int			ray_pos_y;
 	int			step_x;

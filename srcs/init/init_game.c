@@ -100,6 +100,7 @@ int	init_game_data(t_game *gamep, t_file *file)
 	gamep->map = ft_dupsplit(file->map);
 	gamep->row = file->width;
 	gamep->col = file->height;
+	gamep->old_mpos_x = 0;
 	init_raycast(gamep, file);
 	set_player_dir(gamep, file);
 	set_textures(gamep, file);

@@ -1,5 +1,6 @@
 #include "../includes/cub3d.h"
-#include <X11/X.h>
+
+static void	I_AM_LOOPING(t_game *game);
 
 int	main(int argc, char *argv[])
 {
@@ -9,12 +10,17 @@ int	main(int argc, char *argv[])
 		return (err_msg(ERROR_WRONG_NBR_ARG, NULL), FAILURE);
 	if (init_game(&game, argv[1]))
 		return (FAILURE);
-	mlx_loop_hook(game.mlx, render, &game);
-	mlx_hook(game.win, KeyPress, KeyPressMask, &key_handle, &game);
-	mlx_hook(game.win, MotionNotify, PointerMotionMask, &mouse_handle, &game);
-	mlx_hook(game.win, DestroyNotify, StructureNotifyMask, &close_window,
-		&game);
-	mlx_loop(game.mlx);
+	I_AM_LOOPING(&game);
 	free_game(&game);
 	return (0);
+}
+
+static void	I_AM_LOOPING(t_game *game)
+{
+	mlx_loop_hook(game->mlx, render, game);
+	mlx_hook(game->win, KeyPress, KeyPressMask, &key_handle, game);
+	mlx_hook(game->win, MotionNotify, PointerMotionMask, &mouse_handle, game);
+	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, &close_window,
+		game);
+	mlx_loop(game->mlx);
 }
