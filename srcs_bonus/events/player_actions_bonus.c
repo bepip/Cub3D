@@ -6,7 +6,7 @@
 /*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:59:18 by pibernar          #+#    #+#             */
-/*   Updated: 2024/12/12 15:35:25 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/12/12 18:05:08 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,6 @@ void	player_actions(t_game *game)
 		right_arrow_key(game);
 	if (game->key[5] == 1)
 		left_arrow_key(game);
+	if (is_moving(game) == 1)
+		torch_anim(game);
 }

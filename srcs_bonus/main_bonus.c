@@ -6,7 +6,7 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:30:08 by pibernar          #+#    #+#             */
-/*   Updated: 2024/12/12 17:54:28 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/12/12 18:05:33 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ int	main(int argc, char *argv[])
 		return (err_msg(ERROR_WRONG_NBR_ARG, NULL), FAILURE);
 	if (init_game(&game, argv[1]))
 		return (FAILURE);
-	game.t_coefx = 0.0;
-	game.t_coefy = 0.0;
 	init_bonus_textures(&game);
 	looping_youhouuuuuuuuuuuuuuu(&game);
 	free_game(&game);
