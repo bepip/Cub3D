@@ -6,7 +6,7 @@
 /*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:27:17 by pibernar          #+#    #+#             */
-/*   Updated: 2024/12/04 13:15:29 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:54:54 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,14 @@
 
 static void	set_dir(t_game *gamep, int dir_x, int dir_y)
 {
+	int	i;
+
+	i = -1;
+	while (++i < 6)
+		gamep->key[i] = 0;
 	gamep->dir_x = dir_x;
+	gamep->t_coefx = 0.0;
+	gamep->t_coefy = 0.0;
 	gamep->dir_y = dir_y;
 	gamep->dir_plane_x = 0.66 * (dir_x * cos(M_PI_2) - dir_y * sin(M_PI_2));
 	gamep->dir_plane_y = 0.66 * (dir_x * sin(M_PI_2) + dir_y * cos(M_PI_2));

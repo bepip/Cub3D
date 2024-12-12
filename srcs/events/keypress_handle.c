@@ -1,45 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_handle_bonus.c                                 :+:      :+:    :+:   */
+/*   keypress_handle.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 11:28:14 by pibernar          #+#    #+#             */
-/*   Updated: 2024/12/12 15:52:39 by pibernar         ###   ########.fr       */
+/*   Created: 2024/12/12 17:39:32 by pibernar          #+#    #+#             */
+/*   Updated: 2024/12/12 17:40:02 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d_bonus.h"
+#include "../../includes/cub3d.h"
 
-void	handle_game_key(int key, t_game *game);
+void	handle_game_keypress(int key, t_game *game);
 
-int	key_handle(int key, t_game *game)
+int	keypress_handle(int key, t_game *game)
 {
-	if (game->state == 0 && key == XK_Return)
-		game->state = 1;
-	else if (game->state == 1)
-		handle_game_key(key, game);
+	handle_game_keypress(key, game);
 	if (key == XK_Escape)
 		mlx_loop_end(game->mlx);
 	return (SUCCESS);
 }
 
-void	handle_game_key(int key, t_game *game)
+void	handle_game_keypress(int key, t_game *game)
 {
-	printf("%d\n", key);
-	if (key == XK_space)
-		space_key(game);
-	else if (key == XK_w)
-		w_key(game);
-	else if (key == XK_s)
-		s_key(game);
+	if (key == XK_w)
+		game->key[0] = 1;
 	else if (key == XK_a)
-		a_key(game);
+		game->key[1] = 1;
+	else if (key == XK_s)
+		game->key[2] = 1;
 	else if (key == XK_d)
-		d_key(game);
+		game->key[3] = 1;
 	else if (key == XK_Right)
-		right_arrow_key(game);
+		game->key[4] = 1;
 	else if (key == XK_Left)
-		left_arrow_key(game);
+		game->key[5] = 1;
 }

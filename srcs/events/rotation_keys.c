@@ -6,13 +6,13 @@
 /*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:28:31 by pibernar          #+#    #+#             */
-/*   Updated: 2024/12/04 11:28:32 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:53:42 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void	right_arrow_key(t_game *game)
+void	left_arrow_key(t_game *game)
 {
 	float	temp_dir_x;
 	float	temp_plane_x;
@@ -27,7 +27,7 @@ void	right_arrow_key(t_game *game)
 		* cos(-ROT_SPEED);
 }
 
-void	left_arrow_key(t_game *game)
+void	right_arrow_key(t_game *game)
 {
 	float	temp_dir_x;
 	float	temp_plane_x;

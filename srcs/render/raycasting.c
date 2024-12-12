@@ -6,7 +6,7 @@
 /*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:28:38 by pibernar          #+#    #+#             */
-/*   Updated: 2024/12/04 11:28:39 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:44:45 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	render(t_game *game)
 			game->dist_perp = (game->side_dist_y - game->delta_y);
 		draw_vertline(game, x);
 	}
+	player_actions(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->screen, 0, 0);
 	return (SUCCESS);
 }

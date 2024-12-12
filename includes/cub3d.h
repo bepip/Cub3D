@@ -6,7 +6,7 @@
 /*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:29:23 by pibernar          #+#    #+#             */
-/*   Updated: 2024/12/04 11:29:24 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:46:54 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_game
 	char		**map;
 	int			row;
 	int			col;
+	int			key[6];
 	void		*mlx;
 	void		*win;
 	t_img		*screen;
@@ -116,6 +117,9 @@ int				render(t_game *game);
 // key_handle
 int				key_handle(int key, t_game *game);
 int				close_window(t_game *game);
+void			player_actions(t_game *game);
+int				keypress_handle(int key, t_game *game);
+int				keyrelease_handle(int key, t_game *game);
 // keys
 void			d_key(t_game *game);
 void			w_key(t_game *game);

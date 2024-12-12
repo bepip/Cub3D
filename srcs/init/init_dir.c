@@ -6,7 +6,7 @@
 /*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:27:17 by pibernar          #+#    #+#             */
-/*   Updated: 2024/12/04 11:27:19 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:52:01 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 static void	set_dir(t_game *gamep, int dir_x, int dir_y)
 {
+	int	i;
+
+	i = -1;
+	while (++i < 6)
+		gamep->key[i] = 0;
 	gamep->dir_x = dir_x;
 	gamep->dir_y = dir_y;
 	gamep->dir_plane_x = 0.66 * (dir_x * cos(M_PI_2) - dir_y * sin(M_PI_2));
@@ -27,8 +32,8 @@ int	set_player_dir(t_game *gamep, t_file *file)
 	else if (file->dir == 'S')
 		set_dir(gamep, 0, 1);
 	else if (file->dir == 'E')
-		set_dir(gamep, 1, 0);
-	else if (file->dir == 'W')
 		set_dir(gamep, -1, 0);
+	else if (file->dir == 'W')
+		set_dir(gamep, 1, 0);
 	return (SUCCESS);
 }

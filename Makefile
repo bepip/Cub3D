@@ -33,6 +33,7 @@ SRC_FILES =	main.c \
 			events/close_window.c \
 			events/movement_keys.c \
 			events/rotation_keys.c \
+			events/key_handle.c \
 
 SRCS = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
