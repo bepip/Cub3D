@@ -6,7 +6,7 @@
 /*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 10:07:28 by pibernar          #+#    #+#             */
-/*   Updated: 2024/12/09 17:05:33 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:24:08 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ void	draw_torch(t_game *g, int frame)
 		y = -1;
 		while (++y < g->torch[frame]->height)
 		{
-			if ((int)(x + g->t_coefx + WIDTH / 5) >= g->screen->width ||
+			if ((int)(x + g->t_coefx + 0) >= g->screen->width ||
 			((int)(y + g->t_coefy + 30)) >= g->screen->height)
 				continue ;
 			color = t[y * g->torch[frame]->width + x];
 			if (color == 0x00000000)
 				continue ;
 			d[(int)(y + g->t_coefy + 30) * g->size_line / 4
-				+(int)(x + g->t_coefx + WIDTH / 5)] = color;
+				+(int)(x + g->t_coefx + 0)] = color;
 		}
 	}
 }

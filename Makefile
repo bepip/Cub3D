@@ -62,6 +62,7 @@ BSRC_FILES =	main_bonus.c \
 			render/raycasting_bonus.c \
 			render/mlx_draw_vertline_bonus.c \
 			render/render_bonus.c \
+			render/torch_animation_bonus.c \
 			render/startscreen_bonus.c \
 			render/animation_bonus.c \
 			events/keypress_handle_bonus.c \

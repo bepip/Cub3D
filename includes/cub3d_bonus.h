@@ -6,7 +6,7 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:29:23 by pibernar          #+#    #+#             */
-/*   Updated: 2024/12/12 15:28:16 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:51:54 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int				render(t_game *game);
 int				render_raycast(t_game *game);
 void			render_animation(t_game *game);
 int				draw_minimap(t_game *game);
-void		torch_anim(t_game *game, int key);
+void			torch_anim(t_game *game);
 
 // key_handle
 int				key_handle(int key, t_game *game);
@@ -156,6 +156,7 @@ int				is_coll(int x, int y, char **map);
 
 //actions
 void	player_actions(t_game *game);
+int		is_moving(t_game *game);
 
 // error
 void			err_msg(int err_code, char *msg);

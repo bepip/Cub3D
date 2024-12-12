@@ -6,13 +6,12 @@
 /*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:28:14 by pibernar          #+#    #+#             */
-/*   Updated: 2024/12/12 14:50:57 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:52:39 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
-void	torch_anim(t_game *game, int key);
 void	handle_game_key(int key, t_game *game);
 
 int	key_handle(int key, t_game *game)
@@ -43,5 +42,4 @@ void	handle_game_key(int key, t_game *game)
 		right_arrow_key(game);
 	else if (key == XK_Left)
 		left_arrow_key(game);
-	torch_anim(game, key);
 }
