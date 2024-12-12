@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_bonus.c                                     :+:      :+:    :+:   */
+/*   torch_animation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/09 14:05:21 by pibernar          #+#    #+#             */
-/*   Updated: 2024/12/12 14:58:15 by pibernar         ###   ########.fr       */
+/*   Created: 2024/12/12 14:55:58 by pibernar          #+#    #+#             */
+/*   Updated: 2024/12/12 14:56:13 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
-void	render_startscreen(t_game *game);
-
-int	render(t_game *game)
+void	torch_anim(t_game *game, int key)
 {
-	if (game->state == 0)
-		render_startscreen(game);
-	else
+	const double	step = 0.06;
+	const double	scale = 90;
+	static double	c = 0.0;
+	static int		dir = 1;
+
+	if (key == XK_w || key == XK_s || key == XK_a || key == XK_d)
 	{
-		render_raycast(game);
-		draw_minimap(game);
-		render_animation(game);
-		player_actions(game);
-		mlx_put_image_to_window(game->mlx, game->win, game->screen, 0, 0);
+		if (c + step > 1 || c - step < -1)
+			dir *= -1;
+		c = c + dir * step;
+		game->t_coefx = cos(c * M_PI) * scale;
+		game->t_coefy = (sin(-fabs(c) * M_PI) / 2) * scale;
 	}
-	return (SUCCESS);
 }

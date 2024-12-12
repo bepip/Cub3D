@@ -30,7 +30,6 @@ SRC_FILES =	main.c \
 			utils/free.c \
 			render/raycasting.c \
 			render/mlx_draw_vertline.c \
-			events/key_handle.c \
 			events/close_window.c \
 			events/movement_keys.c \
 			events/rotation_keys.c \
@@ -65,7 +64,10 @@ BSRC_FILES =	main_bonus.c \
 			render/render_bonus.c \
 			render/startscreen_bonus.c \
 			render/animation_bonus.c \
-			events/key_handle_bonus.c \
+			events/keypress_handle_bonus.c \
+			events/keyrelease_handle_bonus.c \
+			events/player_actions_bonus.c \
+			events/player_actions_utils_bonus.c \
 			events/keys_utils_bonus.c \
 			events/mouse_handle_bonus.c \
 			events/close_window_bonus.c \

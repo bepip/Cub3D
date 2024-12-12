@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_bonus.c                                     :+:      :+:    :+:   */
+/*   player_actions_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pibernar <@student.42Luxembourg.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/09 14:05:21 by pibernar          #+#    #+#             */
-/*   Updated: 2024/12/12 14:58:15 by pibernar         ###   ########.fr       */
+/*   Created: 2024/12/12 14:59:18 by pibernar          #+#    #+#             */
+/*   Updated: 2024/12/12 15:35:25 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d_bonus.h"
 
-void	render_startscreen(t_game *game);
-
-int	render(t_game *game)
+void	player_actions(t_game *game)
 {
-	if (game->state == 0)
-		render_startscreen(game);
-	else
-	{
-		render_raycast(game);
-		draw_minimap(game);
-		render_animation(game);
-		player_actions(game);
-		mlx_put_image_to_window(game->mlx, game->win, game->screen, 0, 0);
-	}
-	return (SUCCESS);
+	if (game->key[0] == 1)
+		w_key(game);
+	if (game->key[1] == 1)
+		a_key(game);
+	if (game->key[2] == 1)
+		s_key(game);
+	if (game->key[3] == 1)
+		d_key(game);
+	if (game->key[4] == 1)
+		right_arrow_key(game);
+	if (game->key[5] == 1)
+		left_arrow_key(game);
 }

@@ -6,11 +6,12 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:30:08 by pibernar          #+#    #+#             */
-/*   Updated: 2024/12/10 16:04:16 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:27:48 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
+#include <X11/X.h>
 
 static void	looping_youhouuuuuuuuuuuuuuu(t_game *game);
 static void	init_bonus_textures(t_game *game);
@@ -25,6 +26,8 @@ int	main(int argc, char *argv[])
 		return (FAILURE);
 	game.t_coefx = 0.0;
 	game.t_coefy = 0.0;
+	for (int i = 0; i < 6; ++i)
+		game.key[i] = 0;
 	init_bonus_textures(&game);
 	looping_youhouuuuuuuuuuuuuuu(&game);
 	free_game(&game);
@@ -34,7 +37,8 @@ int	main(int argc, char *argv[])
 static void	looping_youhouuuuuuuuuuuuuuu(t_game *game)
 {
 	mlx_loop_hook(game->mlx, render, game);
-	mlx_hook(game->win, KeyPress, KeyPressMask, &key_handle, game);
+	mlx_hook(game->win, KeyPress, KeyPressMask, &keypress_handle, game);
+	mlx_hook(game->win, KeyRelease, KeyReleaseMask, &keyrelease_handle, game);
 	mlx_hook(game->win, MotionNotify, PointerMotionMask, &mouse_handle, game);
 	mlx_hook(game->win, DestroyNotify, StructureNotifyMask, &close_window,
 		game);

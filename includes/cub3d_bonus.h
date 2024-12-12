@@ -6,7 +6,7 @@
 /*   By: laichoun <laichoun@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:29:23 by pibernar          #+#    #+#             */
-/*   Updated: 2024/12/09 14:33:27 by pibernar         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:28:16 by pibernar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_game
 	char		**map;
 	int			row;
 	int			col;
+	int			key[6];
 	void		*mlx;
 	void		*win;
 	t_img		*screen;
@@ -134,11 +135,14 @@ int				render(t_game *game);
 int				render_raycast(t_game *game);
 void			render_animation(t_game *game);
 int				draw_minimap(t_game *game);
+void		torch_anim(t_game *game, int key);
 
 // key_handle
 int				key_handle(int key, t_game *game);
 int				close_window(t_game *game);
 // keys
+int				keypress_handle(int key, t_game *game);
+int				keyrelease_handle(int key, t_game *game);
 void			d_key(t_game *game);
 void			w_key(t_game *game);
 void			s_key(t_game *game);
@@ -149,6 +153,10 @@ void			left_arrow_key(t_game *game);
 void			hide_show_mouse(t_game *game);
 int				mouse_handle(int x, int y, t_game *game);
 int				is_coll(int x, int y, char **map);
+
+//actions
+void	player_actions(t_game *game);
+
 // error
 void			err_msg(int err_code, char *msg);
 
